@@ -19,15 +19,6 @@ A Flutter application for managing first app launch, onboarding flow, and user p
 - Android Studio or VS Code
 - Emulator or connected device
 
-### Installation
-
-```bash
-git clone https://github.com/AhmedAymanCs/tanzim.git
-cd tanzim
-flutter pub get
-flutter run
-
-
 
 Usage
 Launch the app
@@ -61,3 +52,13 @@ GitHub: GitHub: [AhmedAymanCs](https://github.com/AhmedAymanCs)
 
 License
 This project is licensed under the MIT License.
+
+
+
+### Installation
+
+```bash
+git clone https://github.com/AhmedAymanCs/tanzim.git
+cd tanzim
+flutter pub get
+flutter run
