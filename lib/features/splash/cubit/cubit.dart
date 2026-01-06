@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tanzim/core/local/di/service_locator.dart';
+import 'package:tanzim/core/local/shared_pref/shared_pref_impl.dart';
 import 'package:tanzim/features/splash/cubit/states.dart';
 
 class SplashCubit extends Cubit<SplashStates> {
@@ -6,14 +8,28 @@ class SplashCubit extends Cubit<SplashStates> {
 
   static SplashCubit get(context) => BlocProvider.of(context);
 
+  AppPreference prefs = getIt<AppPreference>();
+
   void startSplash() async {
     emit(SplashLoadingState());
-    Future.delayed(Duration(seconds: 3))
+
+    Future.delayed(Duration(seconds: 1))
         .then((value) {
-          emit(SplashSuccessState());
+          isFirstLaunch();
         })
         .catchError((error) {
           emit(SplashErrorState(error.toString()));
         });
+  }
+
+  bool isFirstLaunch() {
+    if (prefs.isFirstLaunch) {
+      prefs.setFirstLaunch(false).then((value) {
+        emit(SplashFirstLunchState());
+        return true;
+      });
+    }
+    emit(SplashOldUserState());
+    return false;
   }
 }

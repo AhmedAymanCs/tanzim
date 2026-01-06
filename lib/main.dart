@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:tanzim/core/local/di/service_locator.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/generated/l10n.dart';
 import 'package:tanzim/features/splash/screens/splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupServiceLocator();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

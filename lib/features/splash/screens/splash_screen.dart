@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/onboarding/screens.dart';
 import 'package:tanzim/features/splash/cubit/cubit.dart';
 import 'package:tanzim/features/splash/cubit/states.dart';
 import 'package:tanzim/generated/l10n.dart';
@@ -16,10 +17,15 @@ class SplashScreen extends StatelessWidget {
       create: (context) => SplashCubit()..startSplash(),
       child: BlocListener<SplashCubit, SplashStates>(
         listener: (context, state) {
-          if (state is SplashSuccessState) {
+          if (state is SplashOldUserState) {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          } else if (state is SplashFirstLunchState) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => OnboardingScreens()),
             );
           }
         },
