@@ -19,20 +19,25 @@ A Flutter application for managing first app launch, onboarding flow, and user p
 - Android Studio or VS Code
 - Emulator or connected device
 
+### Installation
 
-Usage
-Launch the app
+```bash
+git clone https://github.com/AhmedAymanCs/tanzim.git
+cd tanzim
+flutter pub get
+flutter run
+```
 
-If it’s your first time, the onboarding screen will appear
+### Usage
 
-After finishing onboarding, preferences are stored
-
-Subsequent launches open the Home screen directly
-
-
+- Launch the app
+- If it’s your first time, the onboarding screen will appear
+- After finishing onboarding, preferences are stored
+- Subsequent launches open the Home screen directly
 
 ### Folder Structure
 
+```
 lib/
 ├── core/
 │   ├── di/                  # Service locator using get_it
@@ -42,24 +47,14 @@ lib/
 │       ├── presentation/    # SplashScreen & Cubit
 │       └── domain/          # (Optional) UseCases
 └── main.dart
+```
 
+### Author
 
-
-
-Author
 Ahmed Ayman
 
-GitHub: GitHub: [AhmedAymanCs](https://github.com/AhmedAymanCs)
+GitHub: [AhmedAymanCs](https://github.com/AhmedAymanCs)
 
-License
+### License
+
 This project is licensed under the MIT License.
-
-
-
-### Installation
-
-```bash
-git clone https://github.com/AhmedAymanCs/tanzim.git
-cd tanzim
-flutter pub get
-flutter run
