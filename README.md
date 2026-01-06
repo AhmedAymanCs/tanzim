@@ -1,16 +1,27 @@
-# tanzim
+# Tanzim App
 
-Smart orgainizer
+A Flutter application for managing first app launch, onboarding flow, and user preferences.
+
+## Features
+
+- First launch detection
+- Onboarding screen
+- SharedPreferences for app settings
+- Clean Architecture with Core Layer
+- Dependency Injection using get_it
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter >= 3.0
+- Dart SDK
+- Android Studio / VS Code
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+git clone https://github.com/AhmedAymanCs/tanzim.git
+cd tanzim
+flutter pub get
+flutter run
