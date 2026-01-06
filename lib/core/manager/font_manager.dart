@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 class FontConstants {
-  static const String fontFamily = 'Almarai';
+  static const String fontFamily = 'Cairo';
 }
 
 class FontWeightManager {

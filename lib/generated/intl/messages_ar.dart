@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a en locale. All the
+// This is a library that provides messages for a ar locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -18,29 +18,27 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'en';
+  String get localeName => 'ar';
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
-    "next": MessageLookupByLibrary.simpleMessage("Continue"),
+    "getStarted": MessageLookupByLibrary.simpleMessage("البدء"),
+    "next": MessageLookupByLibrary.simpleMessage("التالي"),
     "onboardingSubTitle1": MessageLookupByLibrary.simpleMessage(
-      "Manage your daily activities with ease and efficiency.",
+      "أضف وأدر جميع مهامك اليومية في مكان واحد مع واجهة بسيطة وسهلة الاستخدام",
     ),
     "onboardingSubTitle2": MessageLookupByLibrary.simpleMessage(
-      "Save your important ideas and notes in an organized and tidy way.",
+      "سجل أفكارك وملاحظاتك المهمة واحفظها بشكل منظم ومرتب",
     ),
     "onboardingSubTitle3": MessageLookupByLibrary.simpleMessage(
-      "Track your progress and get detailed statistics on your tasks and notes.",
+      "تابع تقدمك واحصل على إحصائيات مفصلة عن مهامك وملاحظاتك",
     ),
     "onboardingTitle1": MessageLookupByLibrary.simpleMessage(
-      "Organize your tasks easily",
+      "نظم مهامك بسهولة",
     ),
-    "onboardingTitle2": MessageLookupByLibrary.simpleMessage("Save your notes"),
-    "onboardingTitle3": MessageLookupByLibrary.simpleMessage(
-      "Comprehensive Reports",
-    ),
-    "subTitle": MessageLookupByLibrary.simpleMessage("Your Personal Organizer"),
-    "title": MessageLookupByLibrary.simpleMessage("Tanzim"),
+    "onboardingTitle2": MessageLookupByLibrary.simpleMessage("احفظ ملاحظاتك"),
+    "onboardingTitle3": MessageLookupByLibrary.simpleMessage("تقارير شاملة"),
+    "subTitle": MessageLookupByLibrary.simpleMessage("منظمك الشخصي"),
+    "title": MessageLookupByLibrary.simpleMessage("تنظيم"),
   };
 }

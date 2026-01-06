@@ -68,13 +68,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Organize your tasks easily`
+  String get onboardingTitle1 {
+    return Intl.message(
+      'Organize your tasks easily',
+      name: 'onboardingTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manage your daily activities with ease and efficiency.`
+  String get onboardingSubTitle1 {
+    return Intl.message(
+      'Manage your daily activities with ease and efficiency.',
+      name: 'onboardingSubTitle1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save your notes`
+  String get onboardingTitle2 {
+    return Intl.message(
+      'Save your notes',
+      name: 'onboardingTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save your important ideas and notes in an organized and tidy way.`
+  String get onboardingSubTitle2 {
+    return Intl.message(
+      'Save your important ideas and notes in an organized and tidy way.',
+      name: 'onboardingSubTitle2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Comprehensive Reports`
+  String get onboardingTitle3 {
+    return Intl.message(
+      'Comprehensive Reports',
+      name: 'onboardingTitle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Track your progress and get detailed statistics on your tasks and notes.`
+  String get onboardingSubTitle3 {
+    return Intl.message(
+      'Track your progress and get detailed statistics on your tasks and notes.',
+      name: 'onboardingSubTitle3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue`
+  String get next {
+    return Intl.message('Continue', name: 'next', desc: '', args: []);
+  }
+
+  /// `Get Started`
+  String get getStarted {
+    return Intl.message('Get Started', name: 'getStarted', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[Locale.fromSubtags(languageCode: 'en')];
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'ar'),
+    ];
   }
 
   @override

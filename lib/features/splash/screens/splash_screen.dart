@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
-import 'package:tanzim/features/onboarding/screens.dart';
+import 'package:tanzim/features/onboarding/screen.dart';
 import 'package:tanzim/features/splash/cubit/cubit.dart';
 import 'package:tanzim/features/splash/cubit/states.dart';
 import 'package:tanzim/generated/l10n.dart';
-import '../../../presentation/home_screen.dart';
+import 'package:tanzim/presentation/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -25,7 +26,7 @@ class SplashScreen extends StatelessWidget {
           } else if (state is SplashFirstLunchState) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => OnboardingScreens()),
+              MaterialPageRoute(builder: (context) => OnboardingScreen()),
             );
           }
         },
@@ -47,8 +48,8 @@ class SplashScreen extends StatelessWidget {
                 Text(
                   S.of(context).subTitle,
                   style: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeightManager.bold,
+                    color: ColorManager.lightGrey,
+                    fontWeight: FontWeightManager.semiBold,
                     fontSize: FontSize.s20,
                   ),
                 ),

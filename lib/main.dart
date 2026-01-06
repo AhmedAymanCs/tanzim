@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/local/di/service_locator.dart';
+import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/generated/l10n.dart';
 import 'package:tanzim/features/splash/screens/splash_screen.dart';
@@ -17,9 +18,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: (context, child) {
-        return Directionality(textDirection: TextDirection.rtl, child: child!);
-      },
       locale: Locale('ar'),
       localizationsDelegates: [
         S.delegate,
@@ -29,7 +27,10 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(fontFamily: FontConstants.fontFamily),
+      theme: ThemeData(
+        fontFamily: FontConstants.fontFamily,
+        scaffoldBackgroundColor: ColorManager.background,
+      ),
       home: SplashScreen(),
     );
   }
