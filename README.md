@@ -31,7 +31,7 @@ Subsequent launches open the Home screen directly
 
 
 
-Folder Structure
+### Folder Structure
 
 lib/
 ├── core/
@@ -42,6 +42,7 @@ lib/
 │       ├── presentation/    # SplashScreen & Cubit
 │       └── domain/          # (Optional) UseCases
 └── main.dart
+
 
 
 
