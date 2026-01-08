@@ -7,4 +7,5 @@ class ColorManager {
   static const Color lightGrey = Color(0xFF64748b);
   static const Color darkGrey = Color(0xFF1e293b);
   static const Color background = Color(0xFFf8fafc);
+  static const Color textLightGrey = Color(0xFF64748b);
 }

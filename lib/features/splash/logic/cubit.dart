@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanzim/core/local/di/service_locator.dart';
 import 'package:tanzim/core/local/shared_pref/shared_pref_impl.dart';
-import 'package:tanzim/features/splash/cubit/states.dart';
+import 'package:tanzim/features/splash/logic/states.dart';
 
 class SplashCubit extends Cubit<SplashStates> {
   SplashCubit() : super(SplashInitialState());
@@ -24,10 +24,8 @@ class SplashCubit extends Cubit<SplashStates> {
 
   bool isFirstLaunch() {
     if (prefs.isFirstLaunch) {
-      prefs.setFirstLaunch(false).then((value) {
-        emit(SplashFirstLunchState());
-        return true;
-      });
+      emit(SplashFirstLunchState());
+      return true;
     }
     emit(SplashOldUserState());
     return false;

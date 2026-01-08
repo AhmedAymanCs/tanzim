@@ -138,6 +138,11 @@ class S {
   String get getStarted {
     return Intl.message('Get Started', name: 'getStarted', desc: '', args: []);
   }
+
+  /// `Skip`
+  String get onboardingSkip {
+    return Intl.message('Skip', name: 'onboardingSkip', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

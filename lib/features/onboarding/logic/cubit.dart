@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tanzim/core/local/di/service_locator.dart';
+import 'package:tanzim/core/local/shared_pref/shared_pref_impl.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
-import 'package:tanzim/features/onboarding/cubit/states.dart';
+import 'package:tanzim/features/onboarding/logic/states.dart';
 
 class OnboardingCubit extends Cubit<OnboardingStates> {
   OnboardingCubit() : super(OnboardingInitialState());
 
   static OnboardingCubit get(context) => BlocProvider.of(context);
 
+  AppPreference pref = getIt<AppPreference>();
   final PageController pageController = PageController();
   int currentIndex = 0;
   List<Color> colors = [
@@ -29,5 +32,10 @@ class OnboardingCubit extends Cubit<OnboardingStates> {
   void swipe(index) {
     currentIndex = index;
     emit(OnboardingChangePageState());
+  }
+
+  void finishOnboarding() async {
+    await pref.setFirstLaunch(false);
+    emit(OnboardingCompleteState());
   }
 }

@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
-import 'package:tanzim/features/onboarding/screen.dart';
-import 'package:tanzim/features/splash/cubit/cubit.dart';
-import 'package:tanzim/features/splash/cubit/states.dart';
+import 'package:tanzim/features/onboarding/presentaion/onboarding_screen.dart';
+import 'package:tanzim/features/splash/logic/cubit.dart';
+import 'package:tanzim/features/splash/logic/states.dart';
 import 'package:tanzim/generated/l10n.dart';
 import 'package:tanzim/presentation/home_screen.dart';
 

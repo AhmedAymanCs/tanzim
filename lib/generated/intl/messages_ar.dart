@@ -24,6 +24,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "getStarted": MessageLookupByLibrary.simpleMessage("البدء"),
     "next": MessageLookupByLibrary.simpleMessage("التالي"),
+    "onboardingSkip": MessageLookupByLibrary.simpleMessage("تخطي"),
     "onboardingSubTitle1": MessageLookupByLibrary.simpleMessage(
       "أضف وأدر جميع مهامك اليومية في مكان واحد مع واجهة بسيطة وسهلة الاستخدام",
     ),
