@@ -123,10 +123,11 @@ class OnboardingScreen extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: () {
-                              if (cubit.currentIndex < 2)
+                              if (cubit.currentIndex < 2) {
                                 cubit.changePageButton();
-                              else
+                              } else {
                                 cubit.finishOnboarding();
+                              }
                             },
                             child: Row(
                               children: [

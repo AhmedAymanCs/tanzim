@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ColorManager.background,
+        appBarTheme: AppBarTheme(backgroundColor: ColorManager.appBarColor),
       ),
       home: SplashScreen(),
     );

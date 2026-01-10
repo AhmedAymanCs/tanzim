@@ -23,7 +23,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "getStarted": MessageLookupByLibrary.simpleMessage("البدء"),
+    "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
     "next": MessageLookupByLibrary.simpleMessage("التالي"),
+    "notes": MessageLookupByLibrary.simpleMessage("الملاحظات"),
     "onboardingSkip": MessageLookupByLibrary.simpleMessage("تخطي"),
     "onboardingSubTitle1": MessageLookupByLibrary.simpleMessage(
       "أضف وأدر جميع مهامك اليومية في مكان واحد مع واجهة بسيطة وسهلة الاستخدام",
@@ -39,7 +41,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboardingTitle2": MessageLookupByLibrary.simpleMessage("احفظ ملاحظاتك"),
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage("تقارير شاملة"),
+    "reports": MessageLookupByLibrary.simpleMessage("التقارير"),
+    "subHome": MessageLookupByLibrary.simpleMessage("اختار قسماً للبدء"),
+    "subNotes": MessageLookupByLibrary.simpleMessage("حفظ وتنظيم الافكار"),
+    "subReports": MessageLookupByLibrary.simpleMessage("احصائيات وتقارير"),
+    "subTasks": MessageLookupByLibrary.simpleMessage("ادارة المهام اليومية"),
     "subTitle": MessageLookupByLibrary.simpleMessage("منظمك الشخصي"),
+    "tasks": MessageLookupByLibrary.simpleMessage("المهام"),
     "title": MessageLookupByLibrary.simpleMessage("تنظيم"),
   };
 }

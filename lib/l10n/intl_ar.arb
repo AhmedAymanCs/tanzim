@@ -9,6 +9,14 @@
     "onboardingSubTitle3":"تابع تقدمك واحصل على إحصائيات مفصلة عن مهامك وملاحظاتك",
     "next":"التالي",
     "getStarted":"البدء",
-    "onboardingSkip":"تخطي"
+    "onboardingSkip":"تخطي",
+    "tasks":"المهام",
+    "subTasks":"ادارة المهام اليومية",
+    "notes": "الملاحظات",
+    "subNotes":"حفظ وتنظيم الافكار",
+    "reports" :"التقارير",
+    "subReports":"احصائيات وتقارير",
+    "home":"الرئيسية",
+    "subHome":"اختار قسماً للبدء"
 
 }

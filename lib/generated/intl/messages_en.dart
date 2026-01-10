@@ -23,7 +23,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
+    "home": MessageLookupByLibrary.simpleMessage("Home"),
     "next": MessageLookupByLibrary.simpleMessage("Continue"),
+    "notes": MessageLookupByLibrary.simpleMessage("Notes"),
     "onboardingSkip": MessageLookupByLibrary.simpleMessage("Skip"),
     "onboardingSubTitle1": MessageLookupByLibrary.simpleMessage(
       "Manage your daily activities with ease and efficiency.",
@@ -41,7 +43,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage(
       "Comprehensive Reports",
     ),
+    "reports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "subHome": MessageLookupByLibrary.simpleMessage(
+      "Select a section to start",
+    ),
+    "subNotes": MessageLookupByLibrary.simpleMessage("Save and organize ideas"),
+    "subReports": MessageLookupByLibrary.simpleMessage(
+      "Statistics and Reports",
+    ),
+    "subTasks": MessageLookupByLibrary.simpleMessage("Manage daily tasks"),
     "subTitle": MessageLookupByLibrary.simpleMessage("Your Personal Organizer"),
+    "tasks": MessageLookupByLibrary.simpleMessage("Tasks"),
     "title": MessageLookupByLibrary.simpleMessage("Tanzim"),
   };
 }

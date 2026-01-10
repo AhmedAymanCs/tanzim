@@ -143,6 +143,66 @@ class S {
   String get onboardingSkip {
     return Intl.message('Skip', name: 'onboardingSkip', desc: '', args: []);
   }
+
+  /// `Tasks`
+  String get tasks {
+    return Intl.message('Tasks', name: 'tasks', desc: '', args: []);
+  }
+
+  /// `Manage daily tasks`
+  String get subTasks {
+    return Intl.message(
+      'Manage daily tasks',
+      name: 'subTasks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notes`
+  String get notes {
+    return Intl.message('Notes', name: 'notes', desc: '', args: []);
+  }
+
+  /// `Save and organize ideas`
+  String get subNotes {
+    return Intl.message(
+      'Save and organize ideas',
+      name: 'subNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reports`
+  String get reports {
+    return Intl.message('Reports', name: 'reports', desc: '', args: []);
+  }
+
+  /// `Statistics and Reports`
+  String get subReports {
+    return Intl.message(
+      'Statistics and Reports',
+      name: 'subReports',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message('Home', name: 'home', desc: '', args: []);
+  }
+
+  /// `Select a section to start`
+  String get subHome {
+    return Intl.message(
+      'Select a section to start',
+      name: 'subHome',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
