@@ -17,6 +17,8 @@
     "reports":"Reports",
     "subReports":"Statistics and Reports",
     "home":"Home",
-    "subHome":"Select a section to start"
+    "subHome":"Select a section to start",
+    "activeTasks":"Active Tasks",
+    "completedTasks":"Completed Tasks"
 
 }

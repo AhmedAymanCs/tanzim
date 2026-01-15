@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/tasks/presentaion/tasks_screen.dart';
 import 'package:tanzim/generated/l10n.dart';
 import 'package:tanzim/presentation/shared_widgets.dart';
 
@@ -11,7 +12,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var locale = S.of(context);
     return Scaffold(
-      backgroundColor: ColorManager.background2,
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         elevation: 5,
@@ -79,26 +79,33 @@ class HomeScreen extends StatelessWidget {
               ),
               children: [
                 HomeScreenCard(
-                  text: locale.tasks,
-                  subText: locale.subTasks,
+                  title: locale.tasks,
+                  subTitle: locale.subTasks,
                   icon: Icons.task_alt,
                   gradientColorsOfIcon: ColorManager.taskIconGradient,
                   gradientColorsOfCard: ColorManager.taskCardGradient,
-                ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => TasksScreen()),
+                    );
+                  },
+                ), //Task Card
+
                 HomeScreenCard(
-                  text: locale.notes,
-                  subText: locale.subNotes,
+                  title: locale.notes,
+                  subTitle: locale.subNotes,
                   icon: Icons.description_outlined,
                   gradientColorsOfIcon: ColorManager.notesIconGradient,
                   gradientColorsOfCard: ColorManager.notesCardGradient,
-                ),
+                ), //Notes Card
                 HomeScreenCard(
-                  text: locale.reports,
-                  subText: locale.subReports,
+                  title: locale.reports,
+                  subTitle: locale.subReports,
                   icon: Icons.bar_chart_rounded,
                   gradientColorsOfIcon: ColorManager.reportsIconGradient,
                   gradientColorsOfCard: ColorManager.reportsCardGradient,
-                ),
+                ), //Reports card
               ],
             ),
           ),

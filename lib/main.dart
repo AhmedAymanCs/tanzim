@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tanzim/core/local/di/service_locator.dart';
+import 'package:tanzim/core/local_database/di/service_locator.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/generated/l10n.dart';

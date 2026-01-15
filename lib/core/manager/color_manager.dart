@@ -7,11 +7,12 @@ class ColorManager {
   static const Color green50 = Color(0xFFF0FDF4);
   static const Color green = Color(0xFF10b981);
   static const Color blue = Color(0xFF3b82f6);
+  static const Color red = Color(0xFFef4444);
   static const Color purple = Color(0xFF8b5cf6);
   static const Color lightGrey = Color(0xFF64748b);
   static const Color darkGrey = Color(0xFF1e293b);
-  static const Color background = Color(0xFFf8fafc);
-  static const Color background2 = Color(0xFFeff6ff);
+  static const Color splashScreenBackground = Color(0xFFf8fafc);
+  static const Color background = Color(0xFFeff6ff);
   static const Color appBarColor = Color(0xFFFFFFFF);
   static const Color textLightGrey = lightGrey;
 

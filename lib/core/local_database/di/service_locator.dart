@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tanzim/core/local/shared_pref/shared_pref_impl.dart';
+import 'package:tanzim/core/local_database/shared_pref/shared_pref_impl.dart';
 
 final GetIt getIt = GetIt.instance;
 

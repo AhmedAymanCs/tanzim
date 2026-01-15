@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tanzim/core/local/di/service_locator.dart';
-import 'package:tanzim/core/local/shared_pref/shared_pref_impl.dart';
+import 'package:tanzim/core/local_database/di/service_locator.dart';
+import 'package:tanzim/core/local_database/shared_pref/shared_pref_impl.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/features/onboarding/logic/states.dart';
 

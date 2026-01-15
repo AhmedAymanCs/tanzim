@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tanzim/core/local/di/service_locator.dart';
-import 'package:tanzim/core/local/shared_pref/shared_pref_impl.dart';
+import 'package:tanzim/core/constants.dart';
+import 'package:tanzim/core/local_database/di/service_locator.dart';
+import 'package:tanzim/core/local_database/shared_pref/shared_pref_impl.dart';
 import 'package:tanzim/features/splash/logic/states.dart';
 
 class SplashCubit extends Cubit<SplashStates> {
@@ -13,7 +14,7 @@ class SplashCubit extends Cubit<SplashStates> {
   void startSplash() async {
     emit(SplashLoadingState());
 
-    Future.delayed(Duration(seconds: 2))
+    Future.delayed(Duration(seconds: AppConstants.splashScreenTimer))
         .then((value) {
           isFirstLaunch();
         })

@@ -203,6 +203,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Active Tasks`
+  String get activeTasks {
+    return Intl.message(
+      'Active Tasks',
+      name: 'activeTasks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Completed Tasks`
+  String get completedTasks {
+    return Intl.message(
+      'Completed Tasks',
+      name: 'completedTasks',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
