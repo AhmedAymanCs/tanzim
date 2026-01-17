@@ -223,6 +223,71 @@ class S {
       args: [],
     );
   }
+
+  /// `All Tasks`
+  String get allTasks {
+    return Intl.message('All Tasks', name: 'allTasks', desc: '', args: []);
+  }
+
+  /// `Completed`
+  String get completed {
+    return Intl.message('Completed', name: 'completed', desc: '', args: []);
+  }
+
+  /// `Active`
+  String get active {
+    return Intl.message('Active', name: 'active', desc: '', args: []);
+  }
+
+  /// `High`
+  String get high {
+    return Intl.message('High', name: 'high', desc: '', args: []);
+  }
+
+  /// `medium`
+  String get medium {
+    return Intl.message('medium', name: 'medium', desc: '', args: []);
+  }
+
+  /// `Low`
+  String get low {
+    return Intl.message('Low', name: 'low', desc: '', args: []);
+  }
+
+  /// `Add Task`
+  String get addTask {
+    return Intl.message('Add Task', name: 'addTask', desc: '', args: []);
+  }
+
+  /// `Title`
+  String get taskTitle {
+    return Intl.message('Title', name: 'taskTitle', desc: '', args: []);
+  }
+
+  /// `Description`
+  String get taskDescription {
+    return Intl.message(
+      'Description',
+      name: 'taskDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message('Time', name: 'time', desc: '', args: []);
+  }
+
+  /// `Date`
+  String get date {
+    return Intl.message('Date', name: 'date', desc: '', args: []);
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message('Save', name: 'save', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

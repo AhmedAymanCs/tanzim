@@ -12,149 +12,199 @@ class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    var locale = S.of(context);
+    final locale = S.of(context);
     return BlocProvider(
       create: (BuildContext context) => TasksCubit()..getTasksFromDB(),
-      child: Scaffold(
-        body: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: ColorManager.lightGrey.withOpacity(0.2),
-                    blurRadius: 10,
-                    offset: Offset(0, 6),
-                  ),
-                ],
-                color: ColorManager.appBarColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-              ),
-              child: Column(
-                children: [
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
+      child: Builder(
+        builder: (context) {
+          final cubit = context.read<TasksCubit>();
+
+          return Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                int priority = 0;
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  builder: (context) {
+                    return SingleChildScrollView(
+                      child: AddTaskDialog(
+                        titlecontroller: cubit.titleController,
+                        descriptioncontroller: cubit.descriptionController,
+                        datecontroller: cubit.dateController,
+                        timecontroller: cubit.timeController,
+                        onPriorityChanged: (value) {
+                          priority = value;
                         },
-                        icon: Icon(Icons.arrow_back, size: 30),
+                        onTap: () {
+                          cubit
+                              .insertTaskIntoDB({
+                                "title": cubit.titleController.text,
+                                "subTitle": cubit.descriptionController.text,
+                                "time": cubit.timeController.text,
+                                "date": cubit.dateController.text,
+                                "priority": priority,
+                              })
+                              .then((value) {
+                                print(priority);
+                                Navigator.pop(context);
+                                cubit.titleController.text = "";
+                                cubit.descriptionController.text = "";
+                                cubit.timeController.text = "";
+                                cubit.dateController.text = "";
+                              });
+                        },
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        locale.tasks,
-                        style: TextStyle(
-                          fontWeight: FontWeightManager.bold,
-                          fontSize: FontSize.s28,
-                        ),
+                    );
+                  },
+                );
+              },
+              backgroundColor: ColorManager.green,
+              child: Icon(Icons.add, color: ColorManager.background),
+            ),
+            body: Column(
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorManager.lightGrey.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: Offset(0, 6),
+                      ),
+                    ],
+                    color: ColorManager.appBarColor,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10),
+                      bottomRight: Radius.circular(10),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(Icons.arrow_back, size: 30),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            locale.tasks,
+                            style: TextStyle(
+                              fontWeight: FontWeightManager.bold,
+                              fontSize: FontSize.s28,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 30),
+                      BlocBuilder<TasksCubit, TasksStates>(
+                        builder: (context, state) {
+                          var cubit = TasksCubit.get(context);
+                          return Row(
+                            children: [
+                              InformationCard(
+                                text: cubit.activeTasks.toString(),
+                                subText: locale.activeTasks,
+                                cardColor: ColorManager.green50,
+                                textColor: ColorManager.green,
+                              ),
+                              InformationCard(
+                                text: cubit.completedTasks.toString(),
+                                subText: locale.completedTasks,
+                                cardColor: Color(0xFFE3F2FD),
+                                textColor: ColorManager.blue,
+                              ),
+                            ],
+                          );
+                        },
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30),
-                  BlocBuilder<TasksCubit, TasksStates>(
-                    builder: (context, state) {
-                      var cubit = TasksCubit.get(context);
-                      return Row(
-                        children: [
-                          InformationCard(
-                            text: cubit.activeTasks.toString(),
-                            subText: locale.activeTasks,
-                            cardColor: ColorManager.green50,
-                            textColor: ColorManager.green,
-                          ),
-                          InformationCard(
-                            text: cubit.completedTasks.toString(),
-                            subText: locale.completedTasks,
-                            cardColor: Color(0xFFE3F2FD),
-                            textColor: ColorManager.blue,
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ), // colored information cards and back button and title
-            const SizedBox(height: 20),
-            BlocBuilder<TasksCubit, TasksStates>(
-              builder: (context, state) {
-                var cubit = TasksCubit.get(context);
-                return Row(
-                  children: [
-                    DynamicColorsButton(
-                      text: 'كل المهام',
-                      isPressed: cubit.activeButton == 0 ? true : false,
-                      onTap: () {
-                        cubit.changeActiveButton(0);
-                        cubit.insertTaskIntoDB({
-                          "title": "Finish",
-                          "subTitle": "clear",
-                          "isDone": "1",
-                        });
-                      },
-                    ),
-                    DynamicColorsButton(
-                      text: 'مكتملة',
-                      isPressed: cubit.activeButton == 1 ? true : false,
-                      onTap: () {
-                        cubit.changeActiveButton(1);
-                      },
-                    ),
-                    DynamicColorsButton(
-                      text: 'نشطة',
-                      isPressed: cubit.activeButton == 2 ? true : false,
-                      onTap: () {
-                        cubit.changeActiveButton(2);
-                      },
-                    ),
-                  ],
-                );
-              },
-            ), // filter of tasks buttons
-            Expanded(
-              child: BlocBuilder<TasksCubit, TasksStates>(
-                builder: (context, state) {
-                  var cubit = TasksCubit.get(context);
-                  if (state is TasksLoadedState) {
-                    if (state.tasks.length != 0) {
-                      return ListView.separated(
-                        itemBuilder: (contex, index) => TaskInformationCard(
-                          isDone: cubit.isDone,
-                          colorOfPriority: ColorManager.red,
-                          title: state.tasks[index]["title"],
-                          subTitle: 'Prepare monthly report',
-                          textOfPriority: 'عالية',
-                          day: '1',
-                          month: '1',
-                          year: '2026',
-                          doneButton: () {
-                            cubit.changeStateOfTask();
-                          },
-                          deleteButton: () {
-                            cubit.deleteTaskFromDB(state.tasks[index]["id"]);
+                ), // colored information cards and back button and title
+                const SizedBox(height: 20),
+                BlocBuilder<TasksCubit, TasksStates>(
+                  builder: (context, state) {
+                    var cubit = TasksCubit.get(context);
+                    return Row(
+                      children: [
+                        DynamicColorsButton(
+                          text: locale.allTasks,
+                          isPressed: cubit.activeButton == 0 ? true : false,
+                          onTap: () {
+                            cubit.changeActiveButton(0);
                           },
                         ),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10),
-                        itemCount: state.tasks.length,
-                      );
-                    }
-                  } else if (state is TasksErrorState) {
-                    return Text(state.message);
-                  }
-                  return Center(child: Text('No Tasks yet.'));
-                  ;
-                },
-              ),
-            ), //list of tasks
-          ],
-        ),
+                        DynamicColorsButton(
+                          text: locale.completed,
+                          isPressed: cubit.activeButton == 1 ? true : false,
+                          onTap: () {
+                            cubit.changeActiveButton(1);
+                          },
+                        ),
+                        DynamicColorsButton(
+                          text: locale.active,
+                          isPressed: cubit.activeButton == 2 ? true : false,
+                          onTap: () {
+                            cubit.changeActiveButton(2);
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                ), // filter of tasks buttons
+                Expanded(
+                  child: BlocBuilder<TasksCubit, TasksStates>(
+                    builder: (context, state) {
+                      final cubit = TasksCubit.get(context);
+                      if (state is TasksLoadedState) {
+                        if (state.tasks.isNotEmpty) {
+                          return ListView.separated(
+                            itemBuilder: (contex, index) => TaskInformationCard(
+                              isDone: cubit.isDone,
+                              colorOfPriority:
+                                  cubit.getPriorityColor(
+                                    state.tasks[index]["priority"],
+                                  ) ??
+                                  ColorManager.lightGrey,
+                              title: state.tasks[index]["title"].toString(),
+                              subTitle: state.tasks[index]["subTitle"],
+                              textOfPriority: cubit.getPriorityText(
+                                context,
+                                state.tasks[index]["priority"],
+                              ),
+                              doneButton: () {
+                                cubit.changeStateOfTask();
+                              },
+                              deleteButton: () {
+                                cubit.deleteTaskFromDB(
+                                  state.tasks[index]["id"],
+                                );
+                              },
+                              date: state.tasks[index]["date"],
+                              time: state.tasks[index]["time"],
+                            ),
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 10),
+                            itemCount: state.tasks.length,
+                          );
+                        }
+                      } else if (state is TasksErrorState) {
+                        return Text(state.message);
+                      }
+                      return Center(child: Text('No Tasks yet.'));
+                    },
+                  ),
+                ), //list of tasks
+              ],
+            ),
+          );
+        },
       ),
     );
   }

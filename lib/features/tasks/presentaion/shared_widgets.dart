@@ -1,6 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/tasks/logic/cubit.dart';
+import 'package:tanzim/features/tasks/logic/states.dart';
+import 'package:tanzim/generated/l10n.dart';
 
 class DynamicColorsButton extends StatelessWidget {
   final void Function()? onTap;
@@ -44,9 +50,8 @@ class TaskInformationCard extends StatelessWidget {
   final bool isDone;
   final Color colorOfPriority;
   final String textOfPriority;
-  final String day;
-  final String month;
-  final String year;
+  final String date;
+  final String time;
   final String title;
   final String subTitle;
   final void Function()? deleteButton;
@@ -56,13 +61,12 @@ class TaskInformationCard extends StatelessWidget {
     required this.isDone,
     required this.colorOfPriority,
     required this.textOfPriority,
-    required this.day,
-    required this.month,
-    required this.year,
     required this.title,
     required this.subTitle,
     this.deleteButton,
     this.doneButton,
+    required this.date,
+    required this.time,
   });
 
   @override
@@ -117,7 +121,7 @@ class TaskInformationCard extends StatelessWidget {
               ), // title of task
               Text(
                 subTitle,
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: ColorManager.textLightGrey,
@@ -128,27 +132,32 @@ class TaskInformationCard extends StatelessWidget {
               const SizedBox(height: 15),
               Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 7,
-                      vertical: 3,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: colorOfPriority.withOpacity(0.2),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.flag_outlined,
-                          color: colorOfPriority,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 5),
-                        Text('عالية', style: TextStyle(color: colorOfPriority)),
-                      ],
-                    ),
-                  ), //priority card
+                  PriorityCard(
+                    text: textOfPriority,
+                    colorOfPriority: colorOfPriority,
+                  ),
+
+                  // Container(
+                  //   padding: const EdgeInsets.symmetric(
+                  //     horizontal: 7,
+                  //     vertical: 3,
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(10),
+                  //     color: colorOfPriority.withOpacity(0.2),
+                  //   ),
+                  //   child: Row(
+                  //     children: [
+                  //       Icon(
+                  //         Icons.flag_outlined,
+                  //         color: colorOfPriority,
+                  //         size: 20,
+                  //       ),
+                  //       const SizedBox(width: 5),
+                  //       Text('عالية', style: TextStyle(color: colorOfPriority)),
+                  //     ],
+                  //   ),
+                  // ), //priority card
                   const SizedBox(width: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -168,7 +177,7 @@ class TaskInformationCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 5),
                         Text(
-                          '$year-$month-$day',
+                          date,
                           style: TextStyle(
                             color: ColorManager.lightGrey.withOpacity(0.8),
                           ),
@@ -191,6 +200,342 @@ class TaskInformationCard extends StatelessWidget {
               size: 30,
             ),
           ), // button for delete task
+        ],
+      ),
+    );
+  }
+}
+
+class AddTaskDialog extends StatefulWidget {
+  final TextEditingController titlecontroller;
+  final TextEditingController descriptioncontroller;
+  final TextEditingController datecontroller;
+  final TextEditingController timecontroller;
+  final void Function() onTap;
+  final void Function(int) onPriorityChanged;
+
+  AddTaskDialog({
+    super.key,
+    required this.titlecontroller,
+    required this.descriptioncontroller,
+    required this.datecontroller,
+    required this.timecontroller,
+    required this.onTap,
+    required this.onPriorityChanged,
+  });
+  int priority = 0;
+  @override
+  State<AddTaskDialog> createState() => _AddTaskDialogState();
+}
+
+class _AddTaskDialogState extends State<AddTaskDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: ColorManager.background,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 80),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Text(
+                  S.of(context).addTask,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeightManager.bold,
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+            // title form
+            TaskTextField(
+              controller: widget.titlecontroller,
+              label: S.of(context).taskTitle,
+              color: ColorManager.blue,
+              focusColor: ColorManager.green,
+            ),
+
+            const SizedBox(height: 30),
+            // decription form
+            TaskTextField(
+              controller: widget.descriptioncontroller,
+              label: S.of(context).taskDescription,
+              color: ColorManager.blue,
+              focusColor: ColorManager.green,
+              maxLine: 2,
+            ),
+
+            const SizedBox(height: 30),
+
+            //pick date form
+            TaskTextField(
+              controller: widget.datecontroller,
+              label: S.of(context).date,
+              color: ColorManager.blue,
+              focusColor: ColorManager.green,
+              onTap: () {
+                showDatePicker(
+                  context: context,
+                  firstDate: DateTime.now(),
+                  initialDate: DateTime.now(),
+                  lastDate: DateTime(2100),
+                  builder: (context, child) => Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: ColorScheme.light(
+                        surface: ColorManager.background,
+                        primary: ColorManager.green,
+                      ),
+                    ),
+                    child: child!,
+                  ),
+                ).then((date) {
+                  widget.datecontroller.text =
+                      '${date!.day} - ${date.month} - ${date.year}';
+                });
+              },
+              readOnly: true,
+              showCursor: false,
+            ),
+
+            const SizedBox(height: 30),
+
+            //pick time form
+            TaskTextField(
+              controller: widget.timecontroller,
+              label: S.of(context).time,
+              color: ColorManager.blue,
+              focusColor: ColorManager.green,
+              onTap: () {
+                showTimePicker(
+                  context: context,
+                  initialTime: TimeOfDay.now(),
+                  builder: (context, child) => Theme(
+                    data: Theme.of(context).copyWith(
+                      colorScheme: ColorScheme.light(
+                        primary: ColorManager.green,
+                        onSurface: ColorManager.darkGrey,
+                      ),
+                      timePickerTheme: TimePickerThemeData(
+                        dayPeriodColor: ColorManager.green,
+                      ),
+                    ),
+                    child: child!,
+                  ),
+                ).then((pickedTime) {
+                  int hour = pickedTime!.hour;
+                  final minute = pickedTime.minute.toString().padLeft(2, '0');
+                  final period = hour >= 12 ? 'PM' : 'AM';
+                  if (hour > 12) hour -= 12;
+                  if (hour == 0) hour = 12;
+                  widget.timecontroller.text = '$hour:$minute $period';
+                });
+              },
+              readOnly: true,
+              showCursor: false,
+            ),
+            const SizedBox(height: 30),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.priority = 1;
+                        });
+                        widget.onPriorityChanged(1);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 60,
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: widget.priority == 1
+                              ? ColorManager.red
+                              : ColorManager.lightGrey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          S.of(context).high,
+                          style: TextStyle(
+                            color: ColorManager.background,
+                            fontSize: FontSize.s20,
+                            fontWeight: FontWeightManager.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.priority = 2;
+                        });
+                        widget.onPriorityChanged(2);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 60,
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: widget.priority == 2
+                              ? ColorManager.orange
+                              : ColorManager.lightGrey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          S.of(context).medium,
+                          style: TextStyle(
+                            color: ColorManager.background,
+                            fontSize: FontSize.s20,
+                            fontWeight: FontWeightManager.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          widget.priority = 3;
+                        });
+                        widget.onPriorityChanged(3);
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 60,
+                        margin: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: widget.priority == 3
+                              ? ColorManager.green
+                              : ColorManager.lightGrey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          S.of(context).low,
+                          style: TextStyle(
+                            color: ColorManager.background,
+                            fontSize: FontSize.s20,
+                            fontWeight: FontWeightManager.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: widget.onTap,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ColorManager.green,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(
+                  S.of(context).save,
+                  style: TextStyle(
+                    color: ColorManager.background,
+                    fontWeight: FontWeightManager.bold,
+                    fontSize: FontSize.s20,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TaskTextField extends StatelessWidget {
+  final TextEditingController? controller;
+  final String label;
+  final Color focusColor;
+  final Color color;
+  final int? maxLine;
+  final bool? readOnly;
+  final bool? showCursor;
+  final void Function()? onTap;
+
+  const TaskTextField({
+    super.key,
+    required this.label,
+    required this.color,
+    required this.focusColor,
+    this.maxLine,
+    this.readOnly,
+    this.onTap,
+    this.showCursor,
+    this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      showCursor: showCursor,
+      maxLines: maxLine ?? 1,
+      cursorColor: focusColor,
+      readOnly: readOnly ?? false,
+      onTap: onTap,
+      decoration: InputDecoration(
+        alignLabelWithHint: true,
+        labelText: label,
+        labelStyle: TextStyle(color: ColorManager.darkGrey.withOpacity(0.7)),
+        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: color)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: focusColor),
+        ),
+      ),
+    );
+  }
+}
+
+class PriorityCard extends StatelessWidget {
+  final String text;
+  final Color colorOfPriority;
+  const PriorityCard({
+    super.key,
+    required this.text,
+    required this.colorOfPriority,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: colorOfPriority.withOpacity(0.2),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.flag_outlined, color: colorOfPriority, size: 20),
+          const SizedBox(width: 5),
+          Text(text, style: TextStyle(color: colorOfPriority)),
         ],
       ),
     );

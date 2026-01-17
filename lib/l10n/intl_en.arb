@@ -19,6 +19,18 @@
     "home":"Home",
     "subHome":"Select a section to start",
     "activeTasks":"Active Tasks",
-    "completedTasks":"Completed Tasks"
+    "completedTasks":"Completed Tasks",
+    "allTasks":"All Tasks",
+    "completed":"Completed",
+    "active":"Active",
+    "high":"High",
+    "medium":"medium",
+    "low":"Low",
+    "addTask":"Add Task",
+    "taskTitle":"Title",
+    "taskDescription":"Description",
+    "time":"Time",
+    "date":"Date",
+    "save":"Save"
 
 }

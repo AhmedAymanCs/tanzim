@@ -6,6 +6,8 @@ class TasksLoadingState extends TasksStates {}
 
 class ChangingActiveButtonState extends TasksStates {}
 
+class ChangePriorityState extends TasksStates {}
+
 class ChangingStateOfTaskState extends TasksStates {}
 
 class TasksLoadedState extends TasksStates {

@@ -103,7 +103,7 @@ class InformationCard extends StatelessWidget {
           color: cardColor,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          //crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               text,

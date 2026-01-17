@@ -19,6 +19,18 @@
     "home":"الرئيسية",
     "subHome":"اختار قسماً للبدء",
     "activeTasks":"مهام النشطة",
-    "completedTasks":"مهام مكتمله"
+    "completedTasks":"مهام مكتمله",
+    "allTasks":"كل المهام",
+    "completed":"مكتملة",
+    "active":"نشطة",
+    "high":"عالية",
+    "medium":"متوسطة",
+    "low":"منخفضة",
+    "addTask":"اضافة مهمة",
+    "taskTitle":"العنوان",
+    "taskDescription":"الوصف",
+    "time":"الوقت",
+    "date":"التاريخ",
+    "save":"حفظ"
 
 }

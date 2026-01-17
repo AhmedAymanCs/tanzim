@@ -22,10 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "active": MessageLookupByLibrary.simpleMessage("Active"),
     "activeTasks": MessageLookupByLibrary.simpleMessage("Active Tasks"),
+    "addTask": MessageLookupByLibrary.simpleMessage("Add Task"),
+    "allTasks": MessageLookupByLibrary.simpleMessage("All Tasks"),
+    "completed": MessageLookupByLibrary.simpleMessage("Completed"),
     "completedTasks": MessageLookupByLibrary.simpleMessage("Completed Tasks"),
+    "date": MessageLookupByLibrary.simpleMessage("Date"),
     "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
+    "high": MessageLookupByLibrary.simpleMessage("High"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "low": MessageLookupByLibrary.simpleMessage("Low"),
+    "medium": MessageLookupByLibrary.simpleMessage("medium"),
     "next": MessageLookupByLibrary.simpleMessage("Continue"),
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
     "onboardingSkip": MessageLookupByLibrary.simpleMessage("Skip"),
@@ -46,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Comprehensive Reports",
     ),
     "reports": MessageLookupByLibrary.simpleMessage("Reports"),
+    "save": MessageLookupByLibrary.simpleMessage("Save"),
     "subHome": MessageLookupByLibrary.simpleMessage(
       "Select a section to start",
     ),
@@ -55,7 +64,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "subTasks": MessageLookupByLibrary.simpleMessage("Manage daily tasks"),
     "subTitle": MessageLookupByLibrary.simpleMessage("Your Personal Organizer"),
+    "taskDescription": MessageLookupByLibrary.simpleMessage("Description"),
+    "taskTitle": MessageLookupByLibrary.simpleMessage("Title"),
     "tasks": MessageLookupByLibrary.simpleMessage("Tasks"),
+    "time": MessageLookupByLibrary.simpleMessage("Time"),
     "title": MessageLookupByLibrary.simpleMessage("Tanzim"),
   };
 }

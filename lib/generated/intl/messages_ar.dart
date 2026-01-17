@@ -22,10 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "active": MessageLookupByLibrary.simpleMessage("نشطة"),
     "activeTasks": MessageLookupByLibrary.simpleMessage("مهام النشطة"),
+    "addTask": MessageLookupByLibrary.simpleMessage("اضافة مهمة"),
+    "allTasks": MessageLookupByLibrary.simpleMessage("كل المهام"),
+    "completed": MessageLookupByLibrary.simpleMessage("مكتملة"),
     "completedTasks": MessageLookupByLibrary.simpleMessage("مهام مكتمله"),
+    "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
     "getStarted": MessageLookupByLibrary.simpleMessage("البدء"),
+    "high": MessageLookupByLibrary.simpleMessage("عالية"),
     "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
+    "low": MessageLookupByLibrary.simpleMessage("منخفضة"),
+    "medium": MessageLookupByLibrary.simpleMessage("متوسطة"),
     "next": MessageLookupByLibrary.simpleMessage("التالي"),
     "notes": MessageLookupByLibrary.simpleMessage("الملاحظات"),
     "onboardingSkip": MessageLookupByLibrary.simpleMessage("تخطي"),
@@ -44,12 +52,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboardingTitle2": MessageLookupByLibrary.simpleMessage("احفظ ملاحظاتك"),
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage("تقارير شاملة"),
     "reports": MessageLookupByLibrary.simpleMessage("التقارير"),
+    "save": MessageLookupByLibrary.simpleMessage("حفظ"),
     "subHome": MessageLookupByLibrary.simpleMessage("اختار قسماً للبدء"),
     "subNotes": MessageLookupByLibrary.simpleMessage("حفظ وتنظيم الافكار"),
     "subReports": MessageLookupByLibrary.simpleMessage("احصائيات وتقارير"),
     "subTasks": MessageLookupByLibrary.simpleMessage("ادارة المهام اليومية"),
     "subTitle": MessageLookupByLibrary.simpleMessage("منظمك الشخصي"),
+    "taskDescription": MessageLookupByLibrary.simpleMessage("الوصف"),
+    "taskTitle": MessageLookupByLibrary.simpleMessage("العنوان"),
     "tasks": MessageLookupByLibrary.simpleMessage("المهام"),
+    "time": MessageLookupByLibrary.simpleMessage("الوقت"),
     "title": MessageLookupByLibrary.simpleMessage("تنظيم"),
   };
 }
