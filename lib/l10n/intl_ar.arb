@@ -31,6 +31,8 @@
     "taskDescription":"الوصف",
     "time":"الوقت",
     "date":"التاريخ",
-    "save":"حفظ"
+    "save":"حفظ",
+    "validate":"هذا الحقل مطلوب",
+    "priorityValidate":"اختار الاولوية"
 
 }

@@ -53,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage(
       "Comprehensive Reports",
     ),
+    "priorityValidate": MessageLookupByLibrary.simpleMessage("Select Priority"),
     "reports": MessageLookupByLibrary.simpleMessage("Reports"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
     "subHome": MessageLookupByLibrary.simpleMessage(
@@ -69,5 +70,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "tasks": MessageLookupByLibrary.simpleMessage("Tasks"),
     "time": MessageLookupByLibrary.simpleMessage("Time"),
     "title": MessageLookupByLibrary.simpleMessage("Tanzim"),
+    "validate": MessageLookupByLibrary.simpleMessage("This field is required"),
   };
 }

@@ -31,6 +31,8 @@
     "taskDescription":"Description",
     "time":"Time",
     "date":"Date",
-    "save":"Save"
+    "save":"Save",
+    "validate":"This field is required",
+    "priorityValidate":"Select Priority"
 
 }

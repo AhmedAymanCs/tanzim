@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/features/tasks/logic/cubit.dart';
@@ -13,6 +14,7 @@ class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final locale = S.of(context);
+    final formKey = GlobalKey<FormState>();
     return BlocProvider(
       create: (BuildContext context) => TasksCubit()..getTasksFromDB(),
       child: Builder(
@@ -28,32 +30,45 @@ class TasksScreen extends StatelessWidget {
                   barrierDismissible: true,
                   builder: (context) {
                     return SingleChildScrollView(
-                      child: AddTaskDialog(
-                        titlecontroller: cubit.titleController,
-                        descriptioncontroller: cubit.descriptionController,
-                        datecontroller: cubit.dateController,
-                        timecontroller: cubit.timeController,
-                        onPriorityChanged: (value) {
-                          priority = value;
-                        },
-                        onTap: () {
-                          cubit
-                              .insertTaskIntoDB({
-                                "title": cubit.titleController.text,
-                                "subTitle": cubit.descriptionController.text,
-                                "time": cubit.timeController.text,
-                                "date": cubit.dateController.text,
-                                "priority": priority,
-                              })
-                              .then((value) {
-                                print(priority);
-                                Navigator.pop(context);
-                                cubit.titleController.text = "";
-                                cubit.descriptionController.text = "";
-                                cubit.timeController.text = "";
-                                cubit.dateController.text = "";
-                              });
-                        },
+                      child: Form(
+                        key: formKey,
+                        child: AddTaskDialog(
+                          titlecontroller: cubit.titleController,
+                          descriptioncontroller: cubit.descriptionController,
+                          datecontroller: cubit.dateController,
+                          timecontroller: cubit.timeController,
+                          onPriorityChanged: (value) {
+                            priority = value;
+                          },
+                          onTap: () {
+                            if (formKey.currentState!.validate() &&
+                                priority != 0) {
+                              cubit
+                                  .insertTaskIntoDB({
+                                    "title": cubit.titleController.text,
+                                    "subTitle":
+                                        cubit.descriptionController.text,
+                                    "time": cubit.timeController.text,
+                                    "date": cubit.dateController.text,
+                                    "priority": priority,
+                                  })
+                                  .then((value) {
+                                    print(priority);
+                                    Navigator.pop(context);
+                                    cubit.titleController.text = "";
+                                    cubit.descriptionController.text = "";
+                                    cubit.timeController.text = "";
+                                    cubit.dateController.text = "";
+                                  });
+                            } else if (priority == 0) {
+                              Fluttertoast.showToast(
+                                msg: S.of(context).priorityValidate,
+                                gravity: ToastGravity.BOTTOM,
+                                backgroundColor: ColorManager.green,
+                              );
+                            }
+                          },
+                        ),
                       ),
                     );
                   },

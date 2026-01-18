@@ -51,6 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboardingTitle2": MessageLookupByLibrary.simpleMessage("احفظ ملاحظاتك"),
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage("تقارير شاملة"),
+    "priorityValidate": MessageLookupByLibrary.simpleMessage("اختار الاولوية"),
     "reports": MessageLookupByLibrary.simpleMessage("التقارير"),
     "save": MessageLookupByLibrary.simpleMessage("حفظ"),
     "subHome": MessageLookupByLibrary.simpleMessage("اختار قسماً للبدء"),
@@ -63,5 +64,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "tasks": MessageLookupByLibrary.simpleMessage("المهام"),
     "time": MessageLookupByLibrary.simpleMessage("الوقت"),
     "title": MessageLookupByLibrary.simpleMessage("تنظيم"),
+    "validate": MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
   };
 }

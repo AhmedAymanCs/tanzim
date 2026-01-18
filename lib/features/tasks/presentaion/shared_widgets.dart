@@ -1,11 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
-import 'package:tanzim/features/tasks/logic/cubit.dart';
-import 'package:tanzim/features/tasks/logic/states.dart';
 import 'package:tanzim/generated/l10n.dart';
 
 class DynamicColorsButton extends StatelessWidget {
@@ -264,6 +259,12 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               label: S.of(context).taskTitle,
               color: ColorManager.blue,
               focusColor: ColorManager.green,
+              validator: (value) {
+                if (value!.trim().isEmpty) {
+                  return S.of(context).validate;
+                }
+                return null;
+              },
             ),
 
             const SizedBox(height: 30),
@@ -304,6 +305,12 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                       '${date!.day} - ${date.month} - ${date.year}';
                 });
               },
+              validator: (value) {
+                if (value!.trim().isEmpty) {
+                  return S.of(context).validate;
+                }
+                return null;
+              },
               readOnly: true,
               showCursor: false,
             ),
@@ -343,6 +350,12 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               },
               readOnly: true,
               showCursor: false,
+              validator: (value) {
+                if (value!.trim().isEmpty) {
+                  return S.of(context).validate;
+                }
+                return null;
+              },
             ),
             const SizedBox(height: 30),
             SizedBox(
@@ -478,6 +491,7 @@ class TaskTextField extends StatelessWidget {
   final bool? readOnly;
   final bool? showCursor;
   final void Function()? onTap;
+  final String? Function(String?)? validator;
 
   const TaskTextField({
     super.key,
@@ -489,6 +503,7 @@ class TaskTextField extends StatelessWidget {
     this.onTap,
     this.showCursor,
     this.controller,
+    this.validator,
   });
 
   @override
@@ -500,6 +515,7 @@ class TaskTextField extends StatelessWidget {
       cursorColor: focusColor,
       readOnly: readOnly ?? false,
       onTap: onTap,
+      validator: validator,
       decoration: InputDecoration(
         alignLabelWithHint: true,
         labelText: label,
@@ -508,6 +524,14 @@ class TaskTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide(color: focusColor),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: ColorManager.red),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(color: ColorManager.red),
         ),
       ),
     );

@@ -288,6 +288,26 @@ class S {
   String get save {
     return Intl.message('Save', name: 'save', desc: '', args: []);
   }
+
+  /// `This field is required`
+  String get validate {
+    return Intl.message(
+      'This field is required',
+      name: 'validate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Priority`
+  String get priorityValidate {
+    return Intl.message(
+      'Select Priority',
+      name: 'priorityValidate',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
