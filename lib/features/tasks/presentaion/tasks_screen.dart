@@ -153,21 +153,21 @@ class TasksScreen extends StatelessWidget {
                           text: locale.allTasks,
                           isPressed: cubit.activeButton == 0 ? true : false,
                           onTap: () {
-                            cubit.changeActiveButton(0);
+                            cubit.getTasksFromDB();
                           },
                         ),
                         DynamicColorsButton(
                           text: locale.completed,
                           isPressed: cubit.activeButton == 1 ? true : false,
                           onTap: () {
-                            cubit.changeActiveButton(1);
+                            cubit.getCompleteTasksFromDB();
                           },
                         ),
                         DynamicColorsButton(
                           text: locale.active,
                           isPressed: cubit.activeButton == 2 ? true : false,
                           onTap: () {
-                            cubit.changeActiveButton(2);
+                            cubit.getUnCompleteTasksFromDB();
                           },
                         ),
                       ],
@@ -178,45 +178,55 @@ class TasksScreen extends StatelessWidget {
                   child: BlocBuilder<TasksCubit, TasksStates>(
                     builder: (context, state) {
                       final cubit = TasksCubit.get(context);
+                      List<Map<String, dynamic>>? currentTasks = [];
                       if (state is TasksLoadedState) {
-                        if (state.tasks.isNotEmpty) {
+                        currentTasks = state.tasks;
+                      } else if (state is DoneTasksLoadedState) {
+                        currentTasks = state.tasks;
+                      } else if (state is UnDoneTasksLoadedState) {
+                        currentTasks = state.tasks;
+                      } else if (state is TasksErrorState) {
+                        return Text(state.message);
+                      }
+                      if (currentTasks!.isNotEmpty) {
+                        if (currentTasks.isNotEmpty) {
                           return ListView.separated(
                             itemBuilder: (contex, index) => TaskInformationCard(
-                              isDone: state.tasks[index]["isDone"] == 1
+                              isDone: currentTasks![index]["isDone"] == 1
                                   ? true
                                   : false,
                               colorOfPriority:
                                   cubit.getPriorityColor(
-                                    state.tasks[index]["priority"],
+                                    currentTasks[index]["priority"],
                                   ) ??
                                   ColorManager.lightGrey,
-                              title: state.tasks[index]["title"],
-                              subTitle: state.tasks[index]["subTitle"],
+                              title: currentTasks[index]["title"],
+                              subTitle: currentTasks[index]["subTitle"],
                               textOfPriority: cubit.getPriorityText(
                                 context,
-                                state.tasks[index]["priority"],
+                                currentTasks[index]["priority"],
                               ),
                               doneButton: () {
                                 cubit.changeStateOfTask(
-                                  state.tasks[index]["id"],
-                                  state.tasks[index]["isDone"] == 1 ? 0 : 1,
+                                  currentTasks![index]["id"],
+                                  currentTasks[index]["isDone"] == 1 ? 0 : 1,
                                 );
                               },
                               deleteButton: () {
                                 cubit.deleteTaskFromDB(
-                                  state.tasks[index]["id"],
+                                  currentTasks![index]["id"],
                                 );
                               },
-                              date: state.tasks[index]["date"],
-                              time: state.tasks[index]["time"],
+                              date: currentTasks[index]["date"],
+                              time: currentTasks[index]["time"],
                             ),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 10),
-                            itemCount: state.tasks.length,
+                            itemCount: currentTasks.length,
                           );
                         }
-                      } else if (state is TasksErrorState) {
-                        return Text(state.message);
+                      } else {
+                        return Center(child: Text('No Tasks yet.'));
                       }
                       return Center(child: Text('No Tasks yet.'));
                     },

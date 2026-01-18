@@ -1,10 +1,22 @@
 import 'package:tanzim/core/local_database/app_database/database.dart';
 
 class TasksLocalDatabaseSource {
-  //get tasks
+  //get all tasks
   Future<List<Map<String, dynamic>>> getAllTasks() async {
     final db = await LocalAppDB.database;
     return db.query('Tasks');
+  }
+
+  //get Done tasks
+  Future<List<Map<String, dynamic>>> getDoneTasks() async {
+    final db = await LocalAppDB.database;
+    return db.query('Tasks', where: "isDone = ?", whereArgs: [1]);
+  }
+
+  //get un compeleted tasks
+  Future<List<Map<String, dynamic>>> getUnDoneTasks() async {
+    final db = await LocalAppDB.database;
+    return db.query('Tasks', where: "isDone = ?", whereArgs: [0]);
   }
 
   //insert tasks

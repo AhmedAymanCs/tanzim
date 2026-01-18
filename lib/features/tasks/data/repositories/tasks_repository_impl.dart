@@ -10,6 +10,16 @@ class TasksRepository {
     return await local.getAllTasks();
   }
 
+  //get Done tasks
+  Future<List<Map<String, dynamic>>> getDoneTasks() async {
+    return await local.getDoneTasks();
+  }
+
+  //get Un Done tasks
+  Future<List<Map<String, dynamic>>> getUnDoneTasks() async {
+    return await local.getUnDoneTasks();
+  }
+
   //insert task
   Future<void> insertTask(Map<String, dynamic> value) async {
     await local.insertTask(value);

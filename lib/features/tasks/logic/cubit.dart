@@ -16,8 +16,8 @@ class TasksCubit extends Cubit<TasksStates> {
   final dateController = TextEditingController();
   final timeController = TextEditingController();
 
-  int activeTasks = 10;
-  int completedTasks = 5;
+  int activeTasks = 0;
+  int completedTasks = 0;
   int activeButton = 0;
   //bool isDone = false;
 
@@ -27,7 +27,6 @@ class TasksCubit extends Cubit<TasksStates> {
 
   void changeActiveButton(int index) {
     activeButton = index;
-    emit(ChangingActiveButtonState());
   } //for filtering tasks
 
   void changeStateOfTask(int id, int isDone) {
@@ -70,7 +69,37 @@ class TasksCubit extends Cubit<TasksStates> {
     emit(TasksLoadingState());
     try {
       final tasks = await repository.getTasks();
+      countFilterdTasks(tasks);
+      changeActiveButton(0);
       emit(TasksLoadedState(tasks: tasks));
+    } catch (e) {
+      emit(TasksErrorState(e.toString()));
+    }
+  }
+
+  void countFilterdTasks(List<Map<String, dynamic>> Tasks) {
+    completedTasks = Tasks.where((task) => task['isDone'] == 1).length;
+    activeTasks = Tasks.length - completedTasks;
+  }
+
+  Future<void> getCompleteTasksFromDB() async {
+    emit(TasksLoadingState());
+    try {
+      final doneTasks = await repository.getDoneTasks();
+      changeActiveButton(1);
+      emit(DoneTasksLoadedState(tasks: doneTasks));
+    } catch (e) {
+      emit(TasksErrorState(e.toString()));
+    }
+  }
+
+  //get un completed Tasks
+  Future<void> getUnCompleteTasksFromDB() async {
+    emit(TasksLoadingState());
+    try {
+      final unDoneTasks = await repository.getUnDoneTasks();
+      changeActiveButton(2);
+      emit(UnDoneTasksLoadedState(tasks: unDoneTasks));
     } catch (e) {
       emit(TasksErrorState(e.toString()));
     }

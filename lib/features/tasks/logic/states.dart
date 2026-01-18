@@ -16,6 +16,18 @@ class TasksLoadedState extends TasksStates {
   TasksLoadedState({required this.tasks});
 }
 
+class DoneTasksLoadedState extends TasksStates {
+  final List<Map<String, dynamic>> tasks;
+
+  DoneTasksLoadedState({required this.tasks});
+}
+
+class UnDoneTasksLoadedState extends TasksStates {
+  final List<Map<String, dynamic>> tasks;
+
+  UnDoneTasksLoadedState({required this.tasks});
+}
+
 class TasksErrorState extends TasksStates {
   final String message;
   TasksErrorState(this.message);
