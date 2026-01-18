@@ -17,6 +17,10 @@ class TasksRepository {
 
   //delete task
   Future<void> deleteTask(int id) async {
-    local.deleteTask(id);
+    await local.deleteTask(id);
+  }
+
+  Future<int> updateTasks(int id, int value) async {
+    return await local.updateTask(id, value);
   }
 }

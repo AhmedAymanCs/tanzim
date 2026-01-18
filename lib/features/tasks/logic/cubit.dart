@@ -19,7 +19,7 @@ class TasksCubit extends Cubit<TasksStates> {
   int activeTasks = 10;
   int completedTasks = 5;
   int activeButton = 0;
-  bool isDone = false;
+  //bool isDone = false;
 
   final TasksRepository repository = TasksRepository(
     TasksLocalDatabaseSource(),
@@ -30,9 +30,15 @@ class TasksCubit extends Cubit<TasksStates> {
     emit(ChangingActiveButtonState());
   } //for filtering tasks
 
-  void changeStateOfTask() {
-    isDone = !isDone;
-    emit(ChangingStateOfTaskState());
+  void changeStateOfTask(int id, int isDone) {
+    try {
+      updateTask(id, isDone).then((_) {
+        print("Then $isDone");
+        getTasksFromDB();
+      });
+    } catch (e) {
+      emit(TasksErrorState(e.toString()));
+    }
   }
 
   String getPriorityText(context, int num) {
@@ -90,5 +96,10 @@ class TasksCubit extends Cubit<TasksStates> {
     } catch (e) {
       emit(TasksErrorState(e.toString()));
     }
+  }
+
+  //update Task
+  Future<int> updateTask(int id, int value) async {
+    return await repository.updateTasks(id, value);
   }
 }

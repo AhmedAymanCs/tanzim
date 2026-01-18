@@ -51,6 +51,7 @@ class TasksScreen extends StatelessWidget {
                                     "time": cubit.timeController.text,
                                     "date": cubit.dateController.text,
                                     "priority": priority,
+                                    "isDone": 0,
                                   })
                                   .then((value) {
                                     print(priority);
@@ -181,20 +182,25 @@ class TasksScreen extends StatelessWidget {
                         if (state.tasks.isNotEmpty) {
                           return ListView.separated(
                             itemBuilder: (contex, index) => TaskInformationCard(
-                              isDone: cubit.isDone,
+                              isDone: state.tasks[index]["isDone"] == 1
+                                  ? true
+                                  : false,
                               colorOfPriority:
                                   cubit.getPriorityColor(
                                     state.tasks[index]["priority"],
                                   ) ??
                                   ColorManager.lightGrey,
-                              title: state.tasks[index]["title"].toString(),
+                              title: state.tasks[index]["title"],
                               subTitle: state.tasks[index]["subTitle"],
                               textOfPriority: cubit.getPriorityText(
                                 context,
                                 state.tasks[index]["priority"],
                               ),
                               doneButton: () {
-                                cubit.changeStateOfTask();
+                                cubit.changeStateOfTask(
+                                  state.tasks[index]["id"],
+                                  state.tasks[index]["isDone"] == 1 ? 0 : 1,
+                                );
                               },
                               deleteButton: () {
                                 cubit.deleteTaskFromDB(
