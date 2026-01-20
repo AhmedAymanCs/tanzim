@@ -66,21 +66,20 @@ class TaskInformationCard extends StatelessWidget {
     required this.minutes,
     required this.period,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: ColorManager.appBarColor,
         borderRadius: BorderRadius.circular(10),
-        border: BoxBorder.all(color: ColorManager.lightGrey, width: 0.5),
+        border: Border.all(color: ColorManager.lightGrey, width: 0.5),
         boxShadow: [
           BoxShadow(
             color: ColorManager.lightGrey.withOpacity(0.2),
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
             blurRadius: 3,
           ),
         ],
@@ -93,7 +92,7 @@ class TaskInformationCard extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: BoxBorder.all(
+                border: Border.all(
                   color: isDone
                       ? ColorManager.green
                       : ColorManager.lightGrey.withOpacity(0.5),
@@ -105,18 +104,18 @@ class TaskInformationCard extends StatelessWidget {
                 color: isDone
                     ? ColorManager.green
                     : ColorManager.lightGrey.withOpacity(0.5),
-                size: 30,
+                size: 25,
               ),
             ),
           ),
-          // button for done task
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 200,
-                child: Text(
+
+          Expanded(
+            flex: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
                   title,
                   style: TextStyle(
                     color: isDone
@@ -124,64 +123,71 @@ class TaskInformationCard extends StatelessWidget {
                         : ColorManager.darkGrey,
                     decoration: isDone ? TextDecoration.lineThrough : null,
                     fontWeight: FontWeightManager.bold,
-                    fontSize: FontSize.s20,
+                    fontSize: FontSize.s18,
                   ),
                 ),
-              ), // title of task
-              Container(
-                width: 200,
-                child: Text(
+                Text(
                   subTitle,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorManager.textLightGrey,
                     fontWeight: FontWeightManager.regular,
-                    fontSize: FontSize.s16,
+                    fontSize: FontSize.s14,
                   ),
                 ),
-              ), // subtitle of task
-              const SizedBox(height: 15),
-              Row(
-                children: [
-                  PriorityCard(
-                    text: textOfPriority,
-                    colorOfPriority: colorOfPriority,
-                  ), //priority card
-                  const SizedBox(width: 10),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 7,
-                      vertical: 3,
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    PriorityCard(
+                      text: textOfPriority,
+                      colorOfPriority: colorOfPriority,
                     ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: ColorManager.lightGrey.withOpacity(0.1),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.calendar_month_outlined,
-                          color: ColorManager.lightGrey.withOpacity(0.8),
-                          size: 20,
+                    const SizedBox(width: 8),
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 2,
                         ),
-                        const SizedBox(width: 5),
-                        Text(
-                          date,
-                          style: TextStyle(
-                            color: ColorManager.lightGrey.withOpacity(0.8),
-                          ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: ColorManager.lightGrey.withOpacity(0.1),
                         ),
-                      ],
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.calendar_month_outlined,
+                              size: 15,
+                              color: ColorManager.lightGrey,
+                            ),
+                            const SizedBox(width: 4),
+                            Flexible(
+                              child: Text(
+                                date,
+                                style: TextStyle(
+                                  fontSize: FontSize.s12,
+                                  color: ColorManager.lightGrey,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  ), // calender card
-                ],
-              ), //
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
-          Spacer(),
+
+          const SizedBox(width: 5),
+
           Text(
             period,
             style: TextStyle(
-              fontSize: FontSize.s22,
+              fontSize: FontSize.s18,
               fontWeight: FontWeightManager.bold,
               color: isDone
                   ? ColorManager.darkGrey.withOpacity(0.4)
@@ -191,43 +197,52 @@ class TaskInformationCard extends StatelessWidget {
               fontFamily: 'Digital',
             ),
           ),
-          const SizedBox(width: 10),
+
+          const SizedBox(width: 8),
+
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(15),
+            alignment: Alignment.topCenter,
             decoration: BoxDecoration(
               color: ColorManager.appBarColor,
               shape: BoxShape.circle,
+              border: BoxBorder.all(color: colorOfPriority, width: 0.5),
               boxShadow: [
                 BoxShadow(
                   color: colorOfPriority.withOpacity(0.2),
-                  offset: Offset(0, 6),
-                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                  blurRadius: 8,
                 ),
               ],
             ),
-            child: Column(
-              children: [
-                Text(
-                  hour.length == 1 ? "0$hour" : hour,
-                  style: TextStyle(
-                    height: 1,
-                    fontSize: FontSize.s22,
-                    fontWeight: FontWeightManager.bold,
-                    color: colorOfPriority.withOpacity(0.5),
-                    fontFamily: 'Digital',
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    hour.padLeft(2, '0'),
+                    style: TextStyle(
+                      height: 1,
+                      fontSize: FontSize.s16,
+                      fontWeight: FontWeightManager.bold,
+                      color: colorOfPriority.withOpacity(0.7),
+                      fontFamily: 'Digital',
+                    ),
                   ),
-                ),
-                Text(
-                  minutes.length == 1 ? "0$minutes" : minutes,
-                  style: TextStyle(
-                    height: 1,
-                    fontSize: FontSize.s22,
-                    fontWeight: FontWeightManager.bold,
-                    fontFamily: 'Digital',
-                    color: colorOfPriority.withOpacity(0.5),
+                  Text(
+                    minutes.padLeft(2, '0'),
+                    style: TextStyle(
+                      height: 1,
+                      fontSize: FontSize.s16,
+                      fontWeight: FontWeightManager.bold,
+                      fontFamily: 'Digital',
+                      color: colorOfPriority.withOpacity(0.7),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
