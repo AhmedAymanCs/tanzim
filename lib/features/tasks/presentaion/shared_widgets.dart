@@ -171,57 +171,53 @@ class TaskInformationCard extends StatelessWidget {
           Text(
             period,
             style: TextStyle(
-              fontSize: FontSize.s28,
+              fontSize: FontSize.s22,
               fontWeight: FontWeightManager.bold,
-              color: colorOfPriority.withOpacity(0.4),
+              color: period == "PM"
+                  ? ColorManager.lightGrey.withOpacity(0.3)
+                  : ColorManager.blue.withOpacity(0.4),
               fontFamily: 'Digital',
             ),
           ),
           const SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                hour.length == 1 ? "0$hour" : hour,
-                style: TextStyle(
-                  height: 1,
-                  fontSize: FontSize.s28,
-                  fontWeight: FontWeightManager.bold,
-                  color: colorOfPriority.withOpacity(0.4),
-                  fontFamily: 'Digital',
+          Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: ColorManager.appBarColor,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: colorOfPriority.withOpacity(0.2),
+                  offset: Offset(0, 6),
+                  blurRadius: 10,
                 ),
-              ),
-              Text(
-                minutes.length == 1 ? "0$minutes" : minutes,
-                style: TextStyle(
-                  height: 1,
-                  fontSize: FontSize.s28,
-                  fontWeight: FontWeightManager.bold,
-                  fontFamily: 'Digital',
-                  color: colorOfPriority.withOpacity(0.4),
+              ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  hour.length == 1 ? "0$hour" : hour,
+                  style: TextStyle(
+                    height: 1,
+                    fontSize: FontSize.s22,
+                    fontWeight: FontWeightManager.bold,
+                    color: colorOfPriority.withOpacity(0.5),
+                    fontFamily: 'Digital',
+                  ),
                 ),
-              ),
-            ],
+                Text(
+                  minutes.length == 1 ? "0$minutes" : minutes,
+                  style: TextStyle(
+                    height: 1,
+                    fontSize: FontSize.s22,
+                    fontWeight: FontWeightManager.bold,
+                    fontFamily: 'Digital',
+                    color: colorOfPriority.withOpacity(0.5),
+                  ),
+                ),
+              ],
+            ),
           ),
-          //content of task
-          // Text(
-          //   time,
-          //   textDirection: TextDirection.ltr,
-          //   style: TextStyle(
-          //     fontSize: FontSize.s28,
-          //     fontWeight: FontWeightManager.bold,
-          //     color: colorOfPriority,
-          //   ),
-          // ),
-          // IconButton(
-          //   onPressed: deleteButton,
-          //   highlightColor: ColorManager.red.withOpacity(0.1),
-          //   icon: Icon(
-          //     Icons.delete_forever_sharp,
-          //     color: ColorManager.red.withOpacity(0.8),
-          //     size: 30,
-          //   ),
-          // ), // button for delete task
         ],
       ),
     );
