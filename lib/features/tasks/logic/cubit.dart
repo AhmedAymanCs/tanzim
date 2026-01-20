@@ -63,16 +63,19 @@ class TasksCubit extends Cubit<TasksStates> {
     return '';
   }
 
-  Color? getPriorityColor(int num) {
-    switch (num) {
-      case 1:
-        return ColorManager.red;
-      case 2:
-        return ColorManager.orange;
-      case 3:
-        return ColorManager.green;
+  Color? getPriorityColor(int num, bool isDone) {
+    if (isDone) {
+      switch (num) {
+        case 1:
+          return ColorManager.red;
+        case 2:
+          return ColorManager.orange;
+        case 3:
+          return ColorManager.green;
+      }
     }
-    return null;
+
+    return ColorManager.lightGrey;
   }
 
   //get all tasks form DB

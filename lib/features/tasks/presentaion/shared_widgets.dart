@@ -52,7 +52,6 @@ class TaskInformationCard extends StatelessWidget {
   final String period;
   final String title;
   final String subTitle;
-  final void Function()? deleteButton;
   final void Function()? doneButton;
   const TaskInformationCard({
     super.key,
@@ -61,7 +60,6 @@ class TaskInformationCard extends StatelessWidget {
     required this.textOfPriority,
     required this.title,
     required this.subTitle,
-    this.deleteButton,
     this.doneButton,
     required this.date,
     required this.hour,
@@ -90,19 +88,29 @@ class TaskInformationCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(
-            onPressed: doneButton,
-            highlightColor: ColorManager.green.withOpacity(0.1),
-            icon: Icon(
-              isDone
-                  ? Icons.radio_button_checked
-                  : Icons.radio_button_unchecked,
-              color: isDone
-                  ? ColorManager.green
-                  : ColorManager.lightGrey.withOpacity(0.5),
-              size: 30,
+          GestureDetector(
+            onTap: doneButton,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: BoxBorder.all(
+                  color: isDone
+                      ? ColorManager.green
+                      : ColorManager.lightGrey.withOpacity(0.5),
+                  width: 3,
+                ),
+              ),
+              child: Icon(
+                Icons.check,
+                color: isDone
+                    ? ColorManager.green
+                    : ColorManager.lightGrey.withOpacity(0.5),
+                size: 30,
+              ),
             ),
-          ), // button for done task
+          ),
+          // button for done task
+          const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -173,9 +181,11 @@ class TaskInformationCard extends StatelessWidget {
             style: TextStyle(
               fontSize: FontSize.s22,
               fontWeight: FontWeightManager.bold,
-              color: period == "PM"
-                  ? ColorManager.lightGrey.withOpacity(0.3)
-                  : ColorManager.blue.withOpacity(0.4),
+              color: isDone
+                  ? ColorManager.darkGrey.withOpacity(0.4)
+                  : (period == "PM"
+                        ? ColorManager.lightGrey.withOpacity(0.4)
+                        : ColorManager.blue.withOpacity(0.4)),
               fontFamily: 'Digital',
             ),
           ),

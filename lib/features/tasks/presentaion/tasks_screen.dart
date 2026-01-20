@@ -251,6 +251,9 @@ class TasksScreen extends StatelessWidget {
                               colorOfPriority:
                                   cubit.getPriorityColor(
                                     currentTasks[index]["priority"],
+                                    currentTasks[index]["isDone"] == 1
+                                        ? false
+                                        : true,
                                   ) ??
                                   ColorManager.lightGrey,
                               title: currentTasks[index]["title"],
@@ -265,7 +268,6 @@ class TasksScreen extends StatelessWidget {
                                   currentTasks[index]["isDone"] == 1 ? 0 : 1,
                                 );
                               },
-                              deleteButton: () {},
                               date: currentTasks[index]["date"],
                               hour: currentTasks[index]["hour"].toString(),
                               minutes: currentTasks[index]["minutes"]
