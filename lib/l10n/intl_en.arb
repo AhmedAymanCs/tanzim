@@ -33,6 +33,11 @@
     "date":"Date",
     "save":"Save",
     "validate":"This field is required",
-    "priorityValidate":"Select Priority"
-
+    "priorityValidate":"Select Priority",
+    "deleteTaskTitle": "Delete Task",
+    "deleteTaskConfirmation": "Are you sure you want to delete this task?",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "emptyTasks":"No Tasks yet"
 }

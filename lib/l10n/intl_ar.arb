@@ -33,6 +33,12 @@
     "date":"التاريخ",
     "save":"حفظ",
     "validate":"هذا الحقل مطلوب",
-    "priorityValidate":"اختار الاولوية"
+    "priorityValidate":"اختار الاولوية",
+    "deleteTaskTitle": "حذف المهمة",
+    "deleteTaskConfirmation": "هل أنت متأكد من حذف هذه المهمة؟",
+    "delete": "حذف",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "emptyTasks":"لا توجد مهام"
 
 }

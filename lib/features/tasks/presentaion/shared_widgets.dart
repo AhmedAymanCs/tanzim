@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/generated/l10n.dart';
 
 class DynamicColorsButton extends StatelessWidget {
@@ -46,7 +47,9 @@ class TaskInformationCard extends StatelessWidget {
   final Color colorOfPriority;
   final String textOfPriority;
   final String date;
-  final String time;
+  final String hour;
+  final String minutes;
+  final String period;
   final String title;
   final String subTitle;
   final void Function()? deleteButton;
@@ -61,7 +64,9 @@ class TaskInformationCard extends StatelessWidget {
     this.deleteButton,
     this.doneButton,
     required this.date,
-    required this.time,
+    required this.hour,
+    required this.minutes,
+    required this.period,
   });
 
   @override
@@ -83,7 +88,7 @@ class TaskInformationCard extends StatelessWidget {
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
             onPressed: doneButton,
@@ -130,29 +135,7 @@ class TaskInformationCard extends StatelessWidget {
                   PriorityCard(
                     text: textOfPriority,
                     colorOfPriority: colorOfPriority,
-                  ),
-
-                  // Container(
-                  //   padding: const EdgeInsets.symmetric(
-                  //     horizontal: 7,
-                  //     vertical: 3,
-                  //   ),
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(10),
-                  //     color: colorOfPriority.withOpacity(0.2),
-                  //   ),
-                  //   child: Row(
-                  //     children: [
-                  //       Icon(
-                  //         Icons.flag_outlined,
-                  //         color: colorOfPriority,
-                  //         size: 20,
-                  //       ),
-                  //       const SizedBox(width: 5),
-                  //       Text('عالية', style: TextStyle(color: colorOfPriority)),
-                  //     ],
-                  //   ),
-                  // ), //priority card
+                  ), //priority card
                   const SizedBox(width: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(
@@ -183,18 +166,62 @@ class TaskInformationCard extends StatelessWidget {
                 ],
               ), //
             ],
-          ), //content of task
-
+          ),
           Spacer(),
-          IconButton(
-            onPressed: deleteButton,
-            highlightColor: ColorManager.red.withOpacity(0.1),
-            icon: Icon(
-              Icons.delete_forever_sharp,
-              color: ColorManager.red.withOpacity(0.8),
-              size: 30,
+          Text(
+            period,
+            style: TextStyle(
+              fontSize: FontSize.s28,
+              fontWeight: FontWeightManager.bold,
+              color: colorOfPriority.withOpacity(0.4),
+              fontFamily: 'Digital',
             ),
-          ), // button for delete task
+          ),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                hour.length == 1 ? "0$hour" : hour,
+                style: TextStyle(
+                  height: 1,
+                  fontSize: FontSize.s28,
+                  fontWeight: FontWeightManager.bold,
+                  color: colorOfPriority.withOpacity(0.4),
+                  fontFamily: 'Digital',
+                ),
+              ),
+              Text(
+                minutes.length == 1 ? "0$minutes" : minutes,
+                style: TextStyle(
+                  height: 1,
+                  fontSize: FontSize.s28,
+                  fontWeight: FontWeightManager.bold,
+                  fontFamily: 'Digital',
+                  color: colorOfPriority.withOpacity(0.4),
+                ),
+              ),
+            ],
+          ),
+          //content of task
+          // Text(
+          //   time,
+          //   textDirection: TextDirection.ltr,
+          //   style: TextStyle(
+          //     fontSize: FontSize.s28,
+          //     fontWeight: FontWeightManager.bold,
+          //     color: colorOfPriority,
+          //   ),
+          // ),
+          // IconButton(
+          //   onPressed: deleteButton,
+          //   highlightColor: ColorManager.red.withOpacity(0.1),
+          //   icon: Icon(
+          //     Icons.delete_forever_sharp,
+          //     color: ColorManager.red.withOpacity(0.8),
+          //     size: 30,
+          //   ),
+          // ), // button for delete task
         ],
       ),
     );
@@ -208,7 +235,8 @@ class AddTaskDialog extends StatefulWidget {
   final TextEditingController timecontroller;
   final void Function() onTap;
   final void Function(int) onPriorityChanged;
-
+  final void Function(TimeModel) onTimeModelChanged;
+  //TimeModel timeModel;
   AddTaskDialog({
     super.key,
     required this.titlecontroller,
@@ -217,6 +245,7 @@ class AddTaskDialog extends StatefulWidget {
     required this.timecontroller,
     required this.onTap,
     required this.onPriorityChanged,
+    required this.onTimeModelChanged,
   });
   int priority = 0;
   @override
@@ -346,6 +375,13 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   if (hour > 12) hour -= 12;
                   if (hour == 0) hour = 12;
                   widget.timecontroller.text = '$hour:$minute $period';
+                  widget.onTimeModelChanged(
+                    TimeModel(
+                      hour: hour.toString(),
+                      minute: minute,
+                      period: period,
+                    ),
+                  );
                 });
               },
               readOnly: true,

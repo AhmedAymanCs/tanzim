@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/features/tasks/logic/cubit.dart';
 import 'package:tanzim/features/tasks/logic/states.dart';
 import 'package:tanzim/features/tasks/presentaion/shared_widgets.dart';
@@ -33,6 +34,9 @@ class TasksScreen extends StatelessWidget {
                       child: Form(
                         key: formKey,
                         child: AddTaskDialog(
+                          onTimeModelChanged: (TimeModel value) {
+                            cubit.currentTimeModel = value;
+                          },
                           titlecontroller: cubit.titleController,
                           descriptioncontroller: cubit.descriptionController,
                           datecontroller: cubit.dateController,
@@ -48,13 +52,14 @@ class TasksScreen extends StatelessWidget {
                                     "title": cubit.titleController.text,
                                     "subTitle":
                                         cubit.descriptionController.text,
-                                    "time": cubit.timeController.text,
+                                    "hour": cubit.currentTimeModel.hour,
+                                    "minutes": cubit.currentTimeModel.minute,
+                                    "period": cubit.currentTimeModel.period,
                                     "date": cubit.dateController.text,
                                     "priority": priority,
                                     "isDone": 0,
                                   })
                                   .then((value) {
-                                    print(priority);
                                     Navigator.pop(context);
                                     cubit.titleController.text = "";
                                     cubit.descriptionController.text = "";
@@ -178,7 +183,7 @@ class TasksScreen extends StatelessWidget {
                   child: BlocBuilder<TasksCubit, TasksStates>(
                     builder: (context, state) {
                       final cubit = TasksCubit.get(context);
-                      List<Map<String, dynamic>>? currentTasks = [];
+                      List<Map<String, dynamic>> currentTasks = [];
                       if (state is TasksLoadedState) {
                         currentTasks = state.tasks;
                       } else if (state is DoneTasksLoadedState) {
@@ -186,13 +191,61 @@ class TasksScreen extends StatelessWidget {
                       } else if (state is UnDoneTasksLoadedState) {
                         currentTasks = state.tasks;
                       } else if (state is TasksErrorState) {
-                        return Text(state.message);
+                        return Center(child: Text(state.message));
                       }
-                      if (currentTasks!.isNotEmpty) {
-                        if (currentTasks.isNotEmpty) {
-                          return ListView.separated(
-                            itemBuilder: (contex, index) => TaskInformationCard(
-                              isDone: currentTasks![index]["isDone"] == 1
+
+                      if (currentTasks.length > 0) {
+                        return ListView.separated(
+                          itemBuilder: (contex, index) => Dismissible(
+                            key: Key(currentTasks[index]["id"].toString()),
+                            confirmDismiss: (direction) async {
+                              if (direction == DismissDirection.endToStart) {
+                                return await showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    backgroundColor: ColorManager.background,
+                                    title: Text(S.of(context).deleteTaskTitle),
+                                    content: Text(
+                                      S.of(context).deleteTaskConfirmation,
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
+                                        child: Text(
+                                          S.of(context).cancel,
+                                          style: const TextStyle(
+                                            color: ColorManager.green,
+                                          ),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          cubit
+                                              .deleteTaskFromDB(
+                                                currentTasks[index]["id"],
+                                              )
+                                              .then(
+                                                (_) => Navigator.of(
+                                                  context,
+                                                ).pop(true),
+                                              );
+                                        },
+                                        child: Text(
+                                          S.of(context).delete,
+                                          style: const TextStyle(
+                                            color: ColorManager.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
+                            direction: DismissDirection.endToStart,
+                            child: TaskInformationCard(
+                              isDone: currentTasks[index]["isDone"] == 1
                                   ? true
                                   : false,
                               colorOfPriority:
@@ -208,27 +261,33 @@ class TasksScreen extends StatelessWidget {
                               ),
                               doneButton: () {
                                 cubit.changeStateOfTask(
-                                  currentTasks![index]["id"],
+                                  currentTasks[index]["id"],
                                   currentTasks[index]["isDone"] == 1 ? 0 : 1,
                                 );
                               },
-                              deleteButton: () {
-                                cubit.deleteTaskFromDB(
-                                  currentTasks![index]["id"],
-                                );
-                              },
+                              deleteButton: () {},
                               date: currentTasks[index]["date"],
-                              time: currentTasks[index]["time"],
+                              hour: currentTasks[index]["hour"].toString(),
+                              minutes: currentTasks[index]["minutes"]
+                                  .toString(),
+                              period: currentTasks[index]["period"],
                             ),
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(height: 10),
-                            itemCount: currentTasks.length,
-                          );
-                        }
+                          ),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 10),
+                          itemCount: currentTasks.length,
+                        );
                       } else {
-                        return Center(child: Text('No Tasks yet.'));
+                        return Center(
+                          child: Text(
+                            S.of(context).emptyTasks,
+                            style: TextStyle(
+                              fontSize: FontSize.s20,
+                              color: ColorManager.textLightGrey,
+                            ),
+                          ),
+                        );
                       }
-                      return Center(child: Text('No Tasks yet.'));
                     },
                   ),
                 ), //list of tasks

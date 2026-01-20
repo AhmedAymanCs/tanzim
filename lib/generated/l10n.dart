@@ -308,6 +308,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete Task`
+  String get deleteTaskTitle {
+    return Intl.message(
+      'Delete Task',
+      name: 'deleteTaskTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to delete this task?`
+  String get deleteTaskConfirmation {
+    return Intl.message(
+      'Are you sure you want to delete this task?',
+      name: 'deleteTaskConfirmation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
+  }
+
+  /// `No Tasks yet`
+  String get emptyTasks {
+    return Intl.message('No Tasks yet', name: 'emptyTasks', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -19,9 +19,14 @@ class LocalAppDB {
       onCreate: (db, version) async {
         await db.execute('''CREATE TABLE Tasks
            (id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT, subTitle TEXT,
-             isDone INTEGER,date TEXT,
-             priority INTEGER,time TEXT)''');
+            title TEXT, 
+            subTitle TEXT,
+            period TEXT,
+            date TEXT,
+             hour INTEGER,
+             minutes INTEGER,
+             isDone INTEGER,
+             priority INTEGER)''');
       },
     );
   }

@@ -83,9 +83,9 @@ flutter:
       fonts:
         - asset: assets/fonts/Cairo-Font.ttf
           weight: 700
-    - family: Almarai
+    - family: Digital
       fonts:
-        - asset: assets/fonts/Almarai.ttf
+        - asset: assets/fonts/digital-7.ttf
           weight: 700
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

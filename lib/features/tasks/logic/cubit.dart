@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/features/tasks/data/data_source/tasks_local_database.dart';
+import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/features/tasks/data/repositories/tasks_repository_impl.dart';
 import 'package:tanzim/features/tasks/logic/states.dart';
 import 'package:tanzim/generated/l10n.dart';
@@ -15,15 +16,26 @@ class TasksCubit extends Cubit<TasksStates> {
   final descriptionController = TextEditingController();
   final dateController = TextEditingController();
   final timeController = TextEditingController();
+  final TasksRepository repository = TasksRepository(
+    TasksLocalDatabaseSource(),
+  );
+
+  TimeModel currentTimeModel = const TimeModel(
+    hour: '',
+    minute: '',
+    period: '',
+  );
+  void setTimeModel(TimeModel currnetTime) {
+    currentTimeModel = currnetTime;
+  }
 
   int activeTasks = 0;
   int completedTasks = 0;
   int activeButton = 0;
-  //bool isDone = false;
 
-  final TasksRepository repository = TasksRepository(
-    TasksLocalDatabaseSource(),
-  );
+  void updateTime(TimeModel newTime) {
+    currentTimeModel = newTime;
+  }
 
   void changeActiveButton(int index) {
     activeButton = index;
@@ -32,7 +44,6 @@ class TasksCubit extends Cubit<TasksStates> {
   void changeStateOfTask(int id, int isDone) {
     try {
       updateTask(id, isDone).then((_) {
-        print("Then $isDone");
         getTasksFromDB();
       });
     } catch (e) {

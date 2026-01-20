@@ -12,7 +12,6 @@ class ChangingStateOfTaskState extends TasksStates {}
 
 class TasksLoadedState extends TasksStates {
   final List<Map<String, dynamic>> tasks;
-
   TasksLoadedState({required this.tasks});
 }
 
