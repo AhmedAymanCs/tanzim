@@ -114,27 +114,29 @@ class TaskInformationCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: isDone
-                      ? ColorManager.textLightGrey.withOpacity(0.7)
-                      : ColorManager.darkGrey,
-                  decoration: isDone ? TextDecoration.lineThrough : null,
-                  fontWeight: FontWeightManager.bold,
-                  fontSize: FontSize.s20,
+              Container(
+                width: 200,
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: isDone
+                        ? ColorManager.textLightGrey.withOpacity(0.7)
+                        : ColorManager.darkGrey,
+                    decoration: isDone ? TextDecoration.lineThrough : null,
+                    fontWeight: FontWeightManager.bold,
+                    fontSize: FontSize.s20,
+                  ),
                 ),
               ), // title of task
-              Text(
-                subTitle,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: ColorManager.textLightGrey,
-                  fontWeight: FontWeightManager.regular,
-                  fontSize: FontSize.s16,
+              Container(
+                width: 200,
+                child: Text(
+                  subTitle,
+                  style: TextStyle(
+                    color: ColorManager.textLightGrey,
+                    fontWeight: FontWeightManager.regular,
+                    fontSize: FontSize.s16,
+                  ),
                 ),
               ), // subtitle of task
               const SizedBox(height: 15),
