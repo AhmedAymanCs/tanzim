@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "onboardingTitle2": MessageLookupByLibrary.simpleMessage("احفظ ملاحظاتك"),
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage("تقارير شاملة"),
+    "priority": MessageLookupByLibrary.simpleMessage("ألاولوية"),
     "priorityValidate": MessageLookupByLibrary.simpleMessage("اختار الاولوية"),
     "reports": MessageLookupByLibrary.simpleMessage("التقارير"),
     "save": MessageLookupByLibrary.simpleMessage("حفظ"),

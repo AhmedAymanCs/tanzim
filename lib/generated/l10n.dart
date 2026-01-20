@@ -348,6 +348,11 @@ class S {
   String get emptyTasks {
     return Intl.message('No Tasks yet', name: 'emptyTasks', desc: '', args: []);
   }
+
+  /// `Priority`
+  String get priority {
+    return Intl.message('Priority', name: 'priority', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

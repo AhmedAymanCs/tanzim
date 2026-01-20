@@ -39,6 +39,7 @@
     "delete": "حذف",
     "cancel": "إلغاء",
     "edit": "تعديل",
-    "emptyTasks":"لا توجد مهام"
+    "emptyTasks":"لا توجد مهام",
+    "priority":"ألاولوية"
 
 }

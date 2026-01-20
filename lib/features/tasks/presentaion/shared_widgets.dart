@@ -232,7 +232,6 @@ class AddTaskDialog extends StatefulWidget {
   final void Function() onTap;
   final void Function(int) onPriorityChanged;
   final void Function(TimeModel) onTimeModelChanged;
-  //TimeModel timeModel;
   AddTaskDialog({
     super.key,
     required this.titlecontroller,
@@ -258,7 +257,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -341,7 +340,6 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
             ),
 
             const SizedBox(height: 30),
-
             //pick time form
             TaskTextField(
               controller: widget.timecontroller,
@@ -389,7 +387,16 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 return null;
               },
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
+            Text(
+              S.of(context).priority,
+              style: TextStyle(
+                color: ColorManager.darkGrey,
+                fontSize: FontSize.s28,
+                fontWeight: FontWeightManager.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
             SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Row(

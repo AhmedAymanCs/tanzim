@@ -61,6 +61,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "onboardingTitle3": MessageLookupByLibrary.simpleMessage(
       "Comprehensive Reports",
     ),
+    "priority": MessageLookupByLibrary.simpleMessage("Priority"),
     "priorityValidate": MessageLookupByLibrary.simpleMessage("Select Priority"),
     "reports": MessageLookupByLibrary.simpleMessage("Reports"),
     "save": MessageLookupByLibrary.simpleMessage("Save"),
