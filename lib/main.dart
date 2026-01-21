@@ -28,6 +28,10 @@ class MyApp extends StatelessWidget {
       supportedLocales: S.delegate.supportedLocales,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textSelectionTheme: TextSelectionThemeData(
+          selectionHandleColor: ColorManager.blue,
+          selectionColor: ColorManager.green.withOpacity(0.3),
+        ),
         fontFamily: FontConstants.fontFamily,
         scaffoldBackgroundColor: ColorManager.background,
         appBarTheme: AppBarTheme(backgroundColor: ColorManager.appBarColor),

@@ -184,6 +184,13 @@ class TasksScreen extends StatelessWidget {
                     builder: (context, state) {
                       final cubit = TasksCubit.get(context);
                       List<Map<String, dynamic>> currentTasks = [];
+                      if (state is TasksLoadingState) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: ColorManager.green,
+                          ),
+                        );
+                      }
                       if (state is TasksLoadedState) {
                         currentTasks = state.tasks;
                       } else if (state is DoneTasksLoadedState) {

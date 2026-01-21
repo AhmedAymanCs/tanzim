@@ -128,7 +128,6 @@ class TaskInformationCard extends StatelessWidget {
                 ),
                 Text(
                   subTitle,
-                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: ColorManager.textLightGrey,
                     fontWeight: FontWeightManager.regular,
@@ -291,7 +290,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 Text(
                   S.of(context).addTask,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: FontSize.s18,
                     fontWeight: FontWeightManager.bold,
                   ),
                 ),
@@ -450,7 +449,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                           S.of(context).high,
                           style: TextStyle(
                             color: ColorManager.background,
-                            fontSize: FontSize.s20,
+                            fontSize: FontSize.s16,
                             fontWeight: FontWeightManager.bold,
                           ),
                         ),
@@ -479,7 +478,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                           S.of(context).medium,
                           style: TextStyle(
                             color: ColorManager.background,
-                            fontSize: FontSize.s20,
+                            fontSize: FontSize.s16,
                             fontWeight: FontWeightManager.bold,
                           ),
                         ),
@@ -508,7 +507,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                           S.of(context).low,
                           style: TextStyle(
                             color: ColorManager.background,
-                            fontSize: FontSize.s20,
+                            fontSize: FontSize.s16,
                             fontWeight: FontWeightManager.bold,
                           ),
                         ),
@@ -623,9 +622,12 @@ class PriorityCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.flag_outlined, color: colorOfPriority, size: 20),
+          Icon(Icons.flag_outlined, color: colorOfPriority, size: 15),
           const SizedBox(width: 5),
-          Text(text, style: TextStyle(color: colorOfPriority)),
+          Text(
+            text,
+            style: TextStyle(color: colorOfPriority, fontSize: FontSize.s12),
+          ),
         ],
       ),
     );
