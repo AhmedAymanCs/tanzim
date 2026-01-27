@@ -1,6 +1,6 @@
 class TimeModel {
-  final String hour;
-  final String minute;
+  final int hour;
+  final int minute;
   final String period; // morning / evening
 
   const TimeModel({

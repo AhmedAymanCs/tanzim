@@ -21,8 +21,8 @@ class TasksRepository {
   }
 
   //insert task
-  Future<void> insertTask(Map<String, dynamic> value) async {
-    await local.insertTask(value);
+  Future<int> insertTask(Map<String, dynamic> value) async {
+    return await local.insertTask(value);
   }
 
   //delete task

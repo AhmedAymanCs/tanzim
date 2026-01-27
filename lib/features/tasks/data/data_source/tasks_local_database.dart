@@ -20,9 +20,9 @@ class TasksLocalDatabaseSource {
   }
 
   //insert tasks
-  Future<void> insertTask(Map<String, dynamic> value) async {
+  Future<int> insertTask(Map<String, dynamic> value) async {
     final db = await LocalAppDB.database;
-    await db.insert('Tasks', value);
+    return db.insert('Tasks', value);
   }
 
   //delete tasks

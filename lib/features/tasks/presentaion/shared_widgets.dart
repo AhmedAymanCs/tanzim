@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/tasks/data/model/date_model.dart';
 import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/generated/l10n.dart';
 
@@ -258,6 +261,7 @@ class AddTaskDialog extends StatefulWidget {
   final void Function() onTap;
   final void Function(int) onPriorityChanged;
   final void Function(TimeModel) onTimeModelChanged;
+  final void Function(DateModel) onDateModelChanged;
   AddTaskDialog({
     super.key,
     required this.titlecontroller,
@@ -267,6 +271,7 @@ class AddTaskDialog extends StatefulWidget {
     required this.onTap,
     required this.onPriorityChanged,
     required this.onTimeModelChanged,
+    required this.onDateModelChanged,
   });
   int priority = 0;
   @override
@@ -351,6 +356,13 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     child: child!,
                   ),
                 ).then((date) {
+                  widget.onDateModelChanged(
+                    DateModel(
+                      day: date!.day,
+                      month: date.month,
+                      year: date.year,
+                    ),
+                  );
                   widget.datecontroller.text =
                       '${date!.day} - ${date.month} - ${date.year}';
                 });
@@ -397,8 +409,8 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   widget.timecontroller.text = '$hour:$minute $period';
                   widget.onTimeModelChanged(
                     TimeModel(
-                      hour: hour.toString(),
-                      minute: minute,
+                      hour: hour,
+                      minute: int.parse(minute),
                       period: period,
                     ),
                   );

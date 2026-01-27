@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:tanzim/core/local_database/di/service_locator.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/core/service/notification_service.dart';
+import 'package:tanzim/features/tasks/data/model/date_model.dart';
 import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/features/tasks/logic/cubit.dart';
 import 'package:tanzim/features/tasks/logic/states.dart';
@@ -34,9 +37,8 @@ class TasksScreen extends StatelessWidget {
                       child: Form(
                         key: formKey,
                         child: AddTaskDialog(
-                          onTimeModelChanged: (TimeModel value) {
-                            cubit.currentTimeModel = value;
-                          },
+                          onTimeModelChanged: cubit.fillTimeModel,
+                          onDateModelChanged: cubit.fillDateModel,
                           titlecontroller: cubit.titleController,
                           descriptioncontroller: cubit.descriptionController,
                           datecontroller: cubit.dateController,
@@ -61,10 +63,7 @@ class TasksScreen extends StatelessWidget {
                                   })
                                   .then((value) {
                                     Navigator.pop(context);
-                                    cubit.titleController.text = "";
-                                    cubit.descriptionController.text = "";
-                                    cubit.timeController.text = "";
-                                    cubit.dateController.text = "";
+                                    cubit.clearTaskFormField();
                                   });
                             } else if (priority == 0) {
                               Fluttertoast.showToast(

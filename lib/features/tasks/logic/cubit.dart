@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tanzim/core/local_database/di/service_locator.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
+import 'package:tanzim/core/service/notification_service.dart';
 import 'package:tanzim/features/tasks/data/data_source/tasks_local_database.dart';
+import 'package:tanzim/features/tasks/data/model/date_model.dart';
 import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/features/tasks/data/repositories/tasks_repository_impl.dart';
 import 'package:tanzim/features/tasks/logic/states.dart';
@@ -19,22 +22,27 @@ class TasksCubit extends Cubit<TasksStates> {
   final TasksRepository repository = TasksRepository(
     TasksLocalDatabaseSource(),
   );
+  TimeModel currentTimeModel = const TimeModel(hour: 0, minute: 0, period: '');
 
-  TimeModel currentTimeModel = const TimeModel(
-    hour: '',
-    minute: '',
-    period: '',
-  );
-  void setTimeModel(TimeModel currnetTime) {
-    currentTimeModel = currnetTime;
-  }
+  DateModel currentDateModel = const DateModel(day: 0, month: 0, year: 0);
 
   int activeTasks = 0;
   int completedTasks = 0;
   int activeButton = 0;
 
-  void updateTime(TimeModel newTime) {
-    currentTimeModel = newTime;
+  void fillDateModel(DateModel date) {
+    currentDateModel = date;
+  }
+
+  void fillTimeModel(TimeModel time) {
+    currentTimeModel = time;
+  }
+
+  void clearTaskFormField() {
+    titleController.text = "";
+    descriptionController.text = "";
+    timeController.text = "";
+    dateController.text = "";
   }
 
   void changeActiveButton(int index) {
@@ -123,11 +131,40 @@ class TasksCubit extends Cubit<TasksStates> {
   Future<void> insertTaskIntoDB(Map<String, dynamic> task) async {
     emit(TasksLoadingState());
     try {
-      await repository.insertTask(task);
+      final int id = await repository.insertTask(task);
+      await setNotificationService(
+        id: id,
+        title: task['title'],
+        body: task['subTitle'],
+        scheduledTime: DateTime(
+          currentDateModel.year,
+          currentDateModel.month,
+          currentDateModel.day,
+          currentTimeModel.period == 'AM'
+              ? currentTimeModel.hour
+              : currentTimeModel.hour + 12,
+          currentTimeModel.minute,
+        ),
+      );
       await getTasksFromDB();
     } catch (e) {
       emit(TasksErrorState(e.toString()));
     }
+  }
+
+  Future<void> setNotificationService({
+    required int id,
+    required String title,
+    required String body,
+    scheduledTime,
+  }) async {
+    final notificationService = getIt<NotificationService>();
+    await notificationService.scheduleNotification(
+      id: id,
+      title: "Reminder",
+      body: title,
+      scheduledTime: scheduledTime,
+    );
   }
 
   //delete Task from DB
