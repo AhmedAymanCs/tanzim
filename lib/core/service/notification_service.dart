@@ -10,7 +10,7 @@ class NotificationService {
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.local);
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_stat_notification');
 
     const InitializationSettings settings = InitializationSettings(
       android: initializationSettingsAndroid,
@@ -59,6 +59,7 @@ class NotificationService {
         android: AndroidNotificationDetails(
           'task_channel',
           'Task Notifications',
+          icon: 'ic_stat_notification',
           importance: Importance.max,
           priority: Priority.high,
         ),
