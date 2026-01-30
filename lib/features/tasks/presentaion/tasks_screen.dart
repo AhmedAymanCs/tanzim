@@ -20,7 +20,6 @@ class TasksScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final cubit = context.read<TasksCubit>();
-
           return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {
@@ -44,7 +43,8 @@ class TasksScreen extends StatelessWidget {
                           },
                           onTap: () {
                             if (formKey.currentState!.validate() &&
-                                priority != 0) {
+                                priority != 0 &&
+                                cubit.isSuitableTime()) {
                               cubit
                                   .insertTaskIntoDB({
                                     "title": cubit.titleController.text,
@@ -65,7 +65,13 @@ class TasksScreen extends StatelessWidget {
                               Fluttertoast.showToast(
                                 msg: S.of(context).priorityValidate,
                                 gravity: ToastGravity.BOTTOM,
-                                backgroundColor: ColorManager.green,
+                                backgroundColor: ColorManager.orange,
+                              );
+                            } else if (!cubit.isSuitableTime()) {
+                              Fluttertoast.showToast(
+                                msg: locale.notAllowedTime,
+                                gravity: ToastGravity.SNACKBAR,
+                                backgroundColor: ColorManager.red,
                               );
                             }
                           },

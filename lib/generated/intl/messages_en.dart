@@ -43,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "low": MessageLookupByLibrary.simpleMessage("Low"),
     "medium": MessageLookupByLibrary.simpleMessage("medium"),
     "next": MessageLookupByLibrary.simpleMessage("Continue"),
+    "notAllowedTime": MessageLookupByLibrary.simpleMessage(
+      "Please select a time in the future",
+    ),
     "notes": MessageLookupByLibrary.simpleMessage("Notes"),
     "onboardingSkip": MessageLookupByLibrary.simpleMessage("Skip"),
     "onboardingSubTitle1": MessageLookupByLibrary.simpleMessage(

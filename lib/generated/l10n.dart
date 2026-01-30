@@ -353,6 +353,16 @@ class S {
   String get priority {
     return Intl.message('Priority', name: 'priority', desc: '', args: []);
   }
+
+  /// `Please select a time in the future`
+  String get notAllowedTime {
+    return Intl.message(
+      'Please select a time in the future',
+      name: 'notAllowedTime',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

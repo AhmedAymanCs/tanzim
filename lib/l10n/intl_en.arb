@@ -40,5 +40,6 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "emptyTasks":"No Tasks yet",
-    "priority":"Priority"
+    "priority":"Priority",
+    "notAllowedTime":"Please select a time in the future"
 }

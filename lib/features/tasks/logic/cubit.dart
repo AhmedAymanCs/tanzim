@@ -30,6 +30,23 @@ class TasksCubit extends Cubit<TasksStates> {
   int completedTasks = 0;
   int activeButton = 0;
 
+  bool isSuitableTime() {
+    final DateTime now = DateTime.now();
+    final pickedDateTime = DateTime(
+      currentDateModel.year,
+      currentDateModel.month,
+      currentDateModel.day,
+      currentTimeModel.period == "AM"
+          ? currentTimeModel.hour
+          : currentTimeModel.hour + 12,
+      currentTimeModel.minute,
+    );
+    if (pickedDateTime.isAfter(now))
+      return true;
+    else
+      return false;
+  }
+
   void fillDateModel(DateModel date) {
     currentDateModel = date;
   }

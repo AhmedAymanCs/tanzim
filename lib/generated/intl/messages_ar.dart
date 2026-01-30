@@ -43,6 +43,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "low": MessageLookupByLibrary.simpleMessage("منخفضة"),
     "medium": MessageLookupByLibrary.simpleMessage("متوسطة"),
     "next": MessageLookupByLibrary.simpleMessage("التالي"),
+    "notAllowedTime": MessageLookupByLibrary.simpleMessage(
+      "برجاء اختيار وقت لاحق",
+    ),
     "notes": MessageLookupByLibrary.simpleMessage("الملاحظات"),
     "onboardingSkip": MessageLookupByLibrary.simpleMessage("تخطي"),
     "onboardingSubTitle1": MessageLookupByLibrary.simpleMessage(

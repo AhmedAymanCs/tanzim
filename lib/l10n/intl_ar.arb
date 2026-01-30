@@ -40,6 +40,7 @@
     "cancel": "إلغاء",
     "edit": "تعديل",
     "emptyTasks":"لا توجد مهام",
-    "priority":"ألاولوية"
+    "priority":"ألاولوية",
+    "notAllowedTime":"برجاء اختيار وقت لاحق"
 
 }
