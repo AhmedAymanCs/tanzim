@@ -86,49 +86,15 @@ class TasksScreen extends StatelessWidget {
             ),
             body: Column(
               children: [
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorManager.lightGrey.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: Offset(0, 6),
-                      ),
-                    ],
-                    color: ColorManager.appBarColor,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10),
-                      bottomRight: Radius.circular(10),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 30),
-                      Row(
+                CustomAppBar(
+                  text: locale.tasks,
+                  widget: BlocBuilder<TasksCubit, TasksStates>(
+                    builder: (context, state) {
+                      var cubit = TasksCubit.get(context);
+                      return Column(
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back, size: 30),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(
-                            locale.tasks,
-                            style: TextStyle(
-                              fontWeight: FontWeightManager.bold,
-                              fontSize: FontSize.s28,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30),
-                      BlocBuilder<TasksCubit, TasksStates>(
-                        builder: (context, state) {
-                          var cubit = TasksCubit.get(context);
-                          return Row(
+                          const SizedBox(height: 30),
+                          Row(
                             children: [
                               InformationCard(
                                 text: cubit.activeTasks.toString(),
@@ -143,10 +109,10 @@ class TasksScreen extends StatelessWidget {
                                 textColor: ColorManager.blue,
                               ),
                             ],
-                          );
-                        },
-                      ),
-                    ],
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ), // colored information cards and back button and title
                 const SizedBox(height: 20),

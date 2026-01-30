@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/features/notes/presentaion/note_screen.dart';
 import 'package:tanzim/features/tasks/presentaion/tasks_screen.dart';
 import 'package:tanzim/generated/l10n.dart';
 import 'package:tanzim/presentation/shared_widgets.dart';
@@ -98,6 +99,12 @@ class HomeScreen extends StatelessWidget {
                   icon: Icons.description_outlined,
                   gradientColorsOfIcon: ColorManager.notesIconGradient,
                   gradientColorsOfCard: ColorManager.notesCardGradient,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => NotesScreen()),
+                    );
+                  },
                 ), //Notes Card
                 HomeScreenCard(
                   title: locale.reports,
