@@ -167,12 +167,23 @@ class TasksCubit extends Cubit<TasksStates> {
     );
   }
 
+  Future<void> cancelNotification(int id) async {
+    final notificationService = getIt<NotificationService>();
+    return notificationService.cancelNotification(id);
+  }
+
   //delete Task from DB
   Future<void> deleteTaskFromDB(int id) async {
     emit(TasksLoadingState());
     try {
       await repository.deleteTask(id);
-      await getTasksFromDB();
+      await cancelNotification(id)
+          .then((v) async {
+            await getTasksFromDB();
+          })
+          .catchError((error) {
+            emit(TasksErrorState(error.toString()));
+          });
     } catch (e) {
       emit(TasksErrorState(e.toString()));
     }
