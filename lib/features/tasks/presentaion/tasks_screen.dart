@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:tanzim/core/local_database/di/service_locator.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
-import 'package:tanzim/core/service/notification_service.dart';
-import 'package:tanzim/features/tasks/data/model/date_model.dart';
-import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/features/tasks/logic/cubit.dart';
 import 'package:tanzim/features/tasks/logic/states.dart';
 import 'package:tanzim/features/tasks/presentaion/shared_widgets.dart';
@@ -200,7 +196,7 @@ class TasksScreen extends StatelessWidget {
                         return Center(child: Text(state.message));
                       }
 
-                      if (currentTasks.length > 0) {
+                      if (currentTasks.isNotEmpty) {
                         return ListView.separated(
                           itemBuilder: (contex, index) => Dismissible(
                             key: Key(currentTasks[index]["id"].toString()),
@@ -248,6 +244,7 @@ class TasksScreen extends StatelessWidget {
                                   ),
                                 );
                               }
+                              return null;
                             },
                             direction: DismissDirection.endToStart,
                             child: TaskInformationCard(

@@ -45,37 +45,3 @@ class onboardingScreenBuilder extends StatelessWidget {
     );
   }
 }
-
-// Widget onboardingScreenBuilder({
-//   String? title,
-//   String? subTitle,
-//   Widget? icon,
-// }) => Center(
-//   child: Column(
-//     mainAxisAlignment: MainAxisAlignment.center,
-//     children: [
-//       icon ?? SizedBox(),
-//       SizedBox(height: 30),
-//       Text(
-//         title ?? '',
-//         style: TextStyle(
-//           fontSize: FontSize.s35,
-//           fontWeight: FontWeightManager.bold,
-//         ),
-//       ),
-//       SizedBox(height: 30),
-//       Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 5.0),
-//         child: Text(
-//           subTitle ?? '',
-//           textAlign: TextAlign.center,
-//           style: TextStyle(
-//             fontSize: FontSize.s20,
-//             fontWeight: FontWeightManager.regular,
-//             color: ColorManager.textLightGrey,
-//           ),
-//         ),
-//       ),
-//     ],
-//   ),
-// );

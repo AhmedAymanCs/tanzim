@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
@@ -364,7 +362,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                     ),
                   );
                   widget.datecontroller.text =
-                      '${date!.day} - ${date.month} - ${date.year}';
+                      '${date.day} - ${date.month} - ${date.year}';
                 });
               },
               validator: (value) {

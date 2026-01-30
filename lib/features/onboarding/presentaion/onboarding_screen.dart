@@ -50,7 +50,6 @@ class OnboardingScreen extends StatelessWidget {
                       child: PageView(
                         controller: cubit.pageController,
                         onPageChanged: (index) {
-                          cubit.currentIndex = index;
                           cubit.swipe(index);
                         },
                         children: [
