@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/generated/l10n.dart';
 import 'package:tanzim/presentation/shared_widgets.dart';
 
@@ -10,7 +11,20 @@ class NotesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var locale = S.of(context);
     return Scaffold(
-      body: Column(children: [CustomAppBar(text: locale.notes)]),
+      body: Column(
+        children: [
+          CustomAppBar(
+            text: locale.notes,
+            widget: InformationCard(
+              crossAxisStart: true,
+              text: "0",
+              subText: locale.notes,
+              textColor: ColorManager.blue,
+              cardColor: Color(0xFFE3F2FD),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

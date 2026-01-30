@@ -91,24 +91,25 @@ class TasksScreen extends StatelessWidget {
                   widget: BlocBuilder<TasksCubit, TasksStates>(
                     builder: (context, state) {
                       var cubit = TasksCubit.get(context);
-                      return Column(
+                      return Row(
                         children: [
-                          const SizedBox(height: 30),
-                          Row(
-                            children: [
-                              InformationCard(
-                                text: cubit.activeTasks.toString(),
-                                subText: locale.activeTasks,
-                                cardColor: ColorManager.green50,
-                                textColor: ColorManager.green,
-                              ),
-                              InformationCard(
-                                text: cubit.completedTasks.toString(),
-                                subText: locale.completedTasks,
-                                cardColor: Color(0xFFE3F2FD),
-                                textColor: ColorManager.blue,
-                              ),
-                            ],
+                          Expanded(
+                            child: InformationCard(
+                              crossAxisStart: false,
+                              text: cubit.activeTasks.toString(),
+                              subText: locale.activeTasks,
+                              cardColor: ColorManager.green50,
+                              textColor: ColorManager.green,
+                            ),
+                          ),
+                          Expanded(
+                            child: InformationCard(
+                              crossAxisStart: false,
+                              text: cubit.completedTasks.toString(),
+                              subText: locale.completedTasks,
+                              cardColor: Color(0xFFE3F2FD),
+                              textColor: ColorManager.blue,
+                            ),
                           ),
                         ],
                       );
