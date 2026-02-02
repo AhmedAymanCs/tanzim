@@ -7,7 +7,7 @@ import 'package:tanzim/features/onboarding/presentaion/onboarding_screen.dart';
 import 'package:tanzim/features/splash/logic/cubit.dart';
 import 'package:tanzim/features/splash/logic/states.dart';
 import 'package:tanzim/generated/l10n.dart';
-import 'package:tanzim/presentation/home_screen.dart';
+import 'package:tanzim/features/home/presentation/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

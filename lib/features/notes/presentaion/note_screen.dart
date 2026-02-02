@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
+import 'package:tanzim/core/widgets/Information_card.dart';
+import 'package:tanzim/core/widgets/custom_app_bar.dart';
 import 'package:tanzim/generated/l10n.dart';
-import 'package:tanzim/presentation/shared_widgets.dart';
 
 class NotesScreen extends StatelessWidget {
   const NotesScreen({super.key});

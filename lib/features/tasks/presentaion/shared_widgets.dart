@@ -5,6 +5,7 @@ import 'package:tanzim/features/tasks/data/model/date_model.dart';
 import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/generated/l10n.dart';
 
+//dynamic color button widget
 class DynamicColorsButton extends StatelessWidget {
   final void Function()? onTap;
   final String text;
@@ -43,6 +44,7 @@ class DynamicColorsButton extends StatelessWidget {
   }
 }
 
+//task information card widget
 class TaskInformationCard extends StatelessWidget {
   final bool isDone;
   final Color colorOfPriority;
@@ -251,6 +253,7 @@ class TaskInformationCard extends StatelessWidget {
   }
 }
 
+//stateful widget for add task dialog on tap add task button
 class AddTaskDialog extends StatefulWidget {
   final TextEditingController titlecontroller;
   final TextEditingController descriptioncontroller;
@@ -276,6 +279,7 @@ class AddTaskDialog extends StatefulWidget {
   State<AddTaskDialog> createState() => _AddTaskDialogState();
 }
 
+//state of add task dialog
 class _AddTaskDialogState extends State<AddTaskDialog> {
   @override
   Widget build(BuildContext context) {
@@ -557,6 +561,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
   }
 }
 
+//custom text field widget
 class TaskTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String label;
@@ -613,6 +618,7 @@ class TaskTextField extends StatelessWidget {
   }
 }
 
+//priority card widget
 class PriorityCard extends StatelessWidget {
   final String text;
   final Color colorOfPriority;

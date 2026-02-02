@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/core/widgets/Information_card.dart';
+import 'package:tanzim/core/widgets/custom_app_bar.dart';
 import 'package:tanzim/features/tasks/logic/cubit.dart';
 import 'package:tanzim/features/tasks/logic/states.dart';
 import 'package:tanzim/features/tasks/presentaion/shared_widgets.dart';
 import 'package:tanzim/generated/l10n.dart';
-import 'package:tanzim/presentation/shared_widgets.dart';
 
 class TasksScreen extends StatelessWidget {
   const TasksScreen({super.key});
@@ -42,38 +42,16 @@ class TasksScreen extends StatelessWidget {
                             priority = value;
                           },
                           onTap: () {
-                            if (formKey.currentState!.validate() &&
-                                priority != 0 &&
-                                cubit.isSuitableTime()) {
-                              cubit
-                                  .insertTaskIntoDB({
-                                    "title": cubit.titleController.text,
-                                    "subTitle":
-                                        cubit.descriptionController.text,
-                                    "hour": cubit.currentTimeModel.hour,
-                                    "minutes": cubit.currentTimeModel.minute,
-                                    "period": cubit.currentTimeModel.period,
-                                    "date": cubit.dateController.text,
-                                    "priority": priority,
-                                    "isDone": 0,
-                                  })
-                                  .then((value) {
-                                    Navigator.pop(context);
-                                    cubit.clearTaskFormField();
-                                  });
-                            } else if (priority == 0) {
-                              Fluttertoast.showToast(
-                                msg: S.of(context).priorityValidate,
-                                gravity: ToastGravity.BOTTOM,
-                                backgroundColor: ColorManager.orange,
-                              );
-                            } else if (!cubit.isSuitableTime()) {
-                              Fluttertoast.showToast(
-                                msg: locale.notAllowedTime,
-                                gravity: ToastGravity.SNACKBAR,
-                                backgroundColor: ColorManager.red,
-                              );
-                            }
+                            cubit
+                                .submitCreateTask(
+                                  timeErrorMsg: locale.notAllowedTime,
+                                  priorityErrorMsg: locale.priorityValidate,
+                                  priority: priority,
+                                  formKey: formKey,
+                                )
+                                .then((sucsses) {
+                                  if (sucsses) Navigator.of(context).pop();
+                                });
                           },
                         ),
                       ),

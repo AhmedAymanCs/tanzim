@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tanzim/core/local_database/di/service_locator.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/service/notification_service.dart';
@@ -30,6 +32,44 @@ class TasksCubit extends Cubit<TasksStates> {
   int completedTasks = 0;
   int activeButton = 0;
 
+  //submit create task
+  Future<bool> submitCreateTask({
+    required String timeErrorMsg,
+    required String priorityErrorMsg,
+    required int priority,
+    required GlobalKey<FormState> formKey,
+  }) async {
+    if (formKey.currentState!.validate() && priority != 0 && isSuitableTime()) {
+      insertTaskIntoDB({
+        "title": titleController.text,
+        "subTitle": descriptionController.text,
+        "hour": currentTimeModel.hour,
+        "minutes": currentTimeModel.minute,
+        "period": currentTimeModel.period,
+        "date": dateController.text,
+        "priority": priority,
+        "isDone": 0,
+      }).then((value) {
+        clearTaskFormField();
+      });
+    } else if (priority == 0) {
+      Fluttertoast.showToast(
+        msg: priorityErrorMsg,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: ColorManager.orange,
+      );
+      return false;
+    } else if (!isSuitableTime()) {
+      Fluttertoast.showToast(
+        msg: timeErrorMsg,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: ColorManager.red,
+      );
+      return false;
+    }
+    return true;
+  }
+
   bool isSuitableTime() {
     final DateTime now = DateTime.now();
     final pickedDateTime = DateTime(
@@ -45,22 +85,22 @@ class TasksCubit extends Cubit<TasksStates> {
       return true;
     else
       return false;
-  }
+  } // check if the picked time is suitable (after current time)
 
   void fillDateModel(DateModel date) {
     currentDateModel = date;
-  }
+  } //fill date model
 
   void fillTimeModel(TimeModel time) {
     currentTimeModel = time;
-  }
+  } //fill time model
 
   void clearTaskFormField() {
     titleController.text = "";
     descriptionController.text = "";
     timeController.text = "";
     dateController.text = "";
-  }
+  } //clear task form fields
 
   void changeActiveButton(int index) {
     activeButton = index;
@@ -74,7 +114,7 @@ class TasksCubit extends Cubit<TasksStates> {
     } catch (e) {
       emit(TasksErrorState(e.toString()));
     }
-  }
+  } //change task state
 
   String getPriorityText(context, int num) {
     switch (num) {
@@ -86,7 +126,7 @@ class TasksCubit extends Cubit<TasksStates> {
         return S.of(context).low;
     }
     return '';
-  }
+  } //get priority text
 
   Color? getPriorityColor(int num, bool isDone) {
     if (isDone) {
@@ -101,7 +141,7 @@ class TasksCubit extends Cubit<TasksStates> {
     }
 
     return ColorManager.lightGrey;
-  }
+  } //get priority color
 
   //get all tasks form DB
   Future<void> getTasksFromDB() async {
@@ -119,8 +159,9 @@ class TasksCubit extends Cubit<TasksStates> {
   void countFilterdTasks(List<Map<String, dynamic>> Tasks) {
     completedTasks = Tasks.where((task) => task['isDone'] == 1).length;
     activeTasks = Tasks.length - completedTasks;
-  }
+  } //count filtered tasks
 
+  //get completed Tasks
   Future<void> getCompleteTasksFromDB() async {
     emit(TasksLoadingState());
     try {
@@ -169,6 +210,7 @@ class TasksCubit extends Cubit<TasksStates> {
     }
   }
 
+  //set Notification Service
   Future<void> setNotificationService({
     required int id,
     required String title,
@@ -184,6 +226,7 @@ class TasksCubit extends Cubit<TasksStates> {
     );
   }
 
+  //cancel Notification
   Future<void> cancelNotification(int id) async {
     final notificationService = getIt<NotificationService>();
     return notificationService.cancelNotification(id);

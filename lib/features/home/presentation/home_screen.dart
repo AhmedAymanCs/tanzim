@@ -4,7 +4,7 @@ import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/features/notes/presentaion/note_screen.dart';
 import 'package:tanzim/features/tasks/presentaion/tasks_screen.dart';
 import 'package:tanzim/generated/l10n.dart';
-import 'package:tanzim/presentation/shared_widgets.dart';
+import 'package:tanzim/features/home/presentation/shared_widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

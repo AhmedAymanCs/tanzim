@@ -6,7 +6,7 @@ import 'package:tanzim/features/onboarding/logic/cubit.dart';
 import 'package:tanzim/features/onboarding/logic/states.dart';
 import 'package:tanzim/features/onboarding/presentaion/shared_widgets.dart';
 import 'package:tanzim/generated/l10n.dart';
-import 'package:tanzim/presentation/home_screen.dart';
+import 'package:tanzim/features/home/presentation/home_screen.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
