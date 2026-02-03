@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tanzim/core/local_database/di/service_locator.dart';
@@ -81,10 +80,11 @@ class TasksCubit extends Cubit<TasksStates> {
           : currentTimeModel.hour + 12,
       currentTimeModel.minute,
     );
-    if (pickedDateTime.isAfter(now))
+    if (pickedDateTime.isAfter(now)) {
       return true;
-    else
+    } else {
       return false;
+    }
   } // check if the picked time is suitable (after current time)
 
   void fillDateModel(DateModel date) {

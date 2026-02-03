@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanzim/core/local_database/di/service_locator.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
@@ -18,26 +19,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      locale: Locale('ar'),
-      localizationsDelegates: [
-        S.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textSelectionTheme: TextSelectionThemeData(
-          selectionHandleColor: ColorManager.blue,
-          selectionColor: ColorManager.green.withOpacity(0.3),
-        ),
-        fontFamily: FontConstants.fontFamily,
-        scaffoldBackgroundColor: ColorManager.background,
-        appBarTheme: AppBarTheme(backgroundColor: ColorManager.appBarColor),
-      ),
-      home: SplashScreen(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          locale: Locale('ar'),
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData(
+            textSelectionTheme: TextSelectionThemeData(
+              selectionHandleColor: ColorManager.blue,
+              selectionColor: ColorManager.green.withOpacity(0.3),
+            ),
+            fontFamily: FontConstants.fontFamily,
+            scaffoldBackgroundColor: ColorManager.background,
+            appBarTheme: AppBarTheme(backgroundColor: ColorManager.appBarColor),
+          ),
+          home: SplashScreen(),
+        );
+      },
     );
   }
 }

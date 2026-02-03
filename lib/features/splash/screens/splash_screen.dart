@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
@@ -21,12 +22,12 @@ class SplashScreen extends StatelessWidget {
           if (state is SplashOldUserState) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           } else if (state is SplashFirstLunchState) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => OnboardingScreen()),
+              MaterialPageRoute(builder: (context) => const OnboardingScreen()),
             );
           }
         },
@@ -36,16 +37,21 @@ class SplashScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset('assets/svg/logo.svg', fit: BoxFit.contain),
-                const SizedBox(height: 20),
+                const Spacer(flex: 3),
+                SvgPicture.asset(
+                  'assets/svg/logo.svg',
+                  height: 150.h,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(height: 20.h),
                 Text(
                   S.of(context).title,
                   style: TextStyle(
                     fontWeight: FontWeightManager.bold,
-                    fontSize: FontSize.s50,
+                    fontSize: FontSize.s35,
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: 10.h),
                 Text(
                   S.of(context).subTitle,
                   style: TextStyle(
@@ -54,6 +60,7 @@ class SplashScreen extends StatelessWidget {
                     fontSize: FontSize.s20,
                   ),
                 ),
+                const Spacer(flex: 4),
               ],
             ),
           ),

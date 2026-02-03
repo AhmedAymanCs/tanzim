@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/core/manager/values_manager.dart';
 import 'package:tanzim/features/notes/presentaion/note_screen.dart';
 import 'package:tanzim/features/tasks/presentaion/tasks_screen.dart';
 import 'package:tanzim/generated/l10n.dart';
@@ -21,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           locale.title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: FontSize.s22,
+            fontSize: FontSize.s18,
             color: ColorManager.darkGrey,
           ),
         ),
@@ -44,39 +46,43 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(
-              locale.home,
-              style: TextStyle(
-                fontSize: FontSize.s35,
-                fontWeight: FontWeightManager.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(AppPadding.p12),
+              child: Text(
+                locale.home,
+                style: TextStyle(
+                  fontSize: FontSize.s28,
+                  fontWeight: FontWeightManager.bold,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              locale.subHome,
-              style: TextStyle(
-                fontSize: FontSize.s20,
-                fontWeight: FontWeightManager.regular,
-                color: ColorManager.lightGrey,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: AppPadding.p12),
+              child: Text(
+                locale.subHome,
+                style: TextStyle(
+                  fontSize: FontSize.s18,
+                  fontWeight: FontWeightManager.regular,
+                  color: ColorManager.lightGrey,
+                ),
               ),
             ),
-          ),
-          SizedBox(height: 20),
-          Expanded(
-            child: GridView(
+            SizedBox(height: AppSize.s20h),
+            GridView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 400,
-                mainAxisSpacing: 30,
-                crossAxisSpacing: 30,
-                childAspectRatio: 1.7,
+                maxCrossAxisExtent: MediaQuery.of(context).size.width > 500
+                    ? 400
+                    : MediaQuery.of(context).size.width,
+                mainAxisSpacing: AppSize.s20h,
+                crossAxisSpacing: AppSize.s20w,
+                childAspectRatio: 1.3.h,
               ),
               children: [
                 HomeScreenCard(
@@ -115,8 +121,8 @@ class HomeScreen extends StatelessWidget {
                 ), //Reports card
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

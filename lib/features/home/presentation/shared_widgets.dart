@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/core/manager/values_manager.dart';
 
 class HomeScreenCard extends StatelessWidget {
   final String title;
@@ -55,7 +56,7 @@ class HomeScreenCard extends StatelessWidget {
               ),
               child: Icon(icon, color: ColorManager.background, size: 40),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: AppSize.s20h),
             Text(
               title,
               style: TextStyle(
@@ -63,7 +64,7 @@ class HomeScreenCard extends StatelessWidget {
                 fontSize: FontSize.s28,
               ),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: AppSize.s20h),
             Text(
               subTitle,
               style: TextStyle(
