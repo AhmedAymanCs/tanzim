@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           locale.title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: FontSize.s18,
+            fontSize: FontSize.s22,
             color: ColorManager.darkGrey,
           ),
         ),
@@ -56,7 +56,7 @@ class HomeScreen extends StatelessWidget {
               child: Text(
                 locale.home,
                 style: TextStyle(
-                  fontSize: FontSize.s28,
+                  fontSize: FontSize.s35,
                   fontWeight: FontWeightManager.bold,
                 ),
               ),
@@ -66,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               child: Text(
                 locale.subHome,
                 style: TextStyle(
-                  fontSize: FontSize.s18,
+                  fontSize: FontSize.s20,
                   fontWeight: FontWeightManager.regular,
                   color: ColorManager.lightGrey,
                 ),
