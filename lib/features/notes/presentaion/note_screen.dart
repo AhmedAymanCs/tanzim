@@ -16,7 +16,6 @@ class NotesScreen extends StatelessWidget {
           CustomAppBar(
             text: locale.notes,
             widget: InformationCard(
-              crossAxisStart: true,
               text: "0",
               subText: locale.notes,
               textColor: ColorManager.blue,

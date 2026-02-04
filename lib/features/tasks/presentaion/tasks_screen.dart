@@ -62,193 +62,215 @@ class TasksScreen extends StatelessWidget {
               backgroundColor: ColorManager.green,
               child: Icon(Icons.add, color: ColorManager.background),
             ),
-            body: SingleChildScrollView(
-              child: Column(
-                children: [
-                  CustomAppBar(
-                    text: locale.tasks,
-                    widget: BlocBuilder<TasksCubit, TasksStates>(
-                      builder: (context, state) {
-                        var cubit = TasksCubit.get(context);
-                        return Row(
-                          children: [
-                            Expanded(
-                              child: InformationCard(
-                                crossAxisStart: false,
-                                text: cubit.activeTasks.toString(),
-                                subText: locale.activeTasks,
-                                cardColor: ColorManager.green50,
-                                textColor: ColorManager.green,
-                              ),
-                            ),
-                            Expanded(
-                              child: InformationCard(
-                                crossAxisStart: false,
-                                text: cubit.completedTasks.toString(),
-                                subText: locale.completedTasks,
-                                cardColor: Color(0xFFE3F2FD),
-                                textColor: ColorManager.blue,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ), // colored information cards and back button and title
-                  const SizedBox(height: 20),
-                  BlocBuilder<TasksCubit, TasksStates>(
-                    builder: (context, state) {
-                      var cubit = TasksCubit.get(context);
-                      return Row(
-                        children: [
-                          DynamicColorsButton(
-                            text: locale.allTasks,
-                            isPressed: cubit.activeButton == 0 ? true : false,
-                            onTap: () {
-                              cubit.getTasksFromDB();
-                            },
-                          ),
-                          DynamicColorsButton(
-                            text: locale.completed,
-                            isPressed: cubit.activeButton == 1 ? true : false,
-                            onTap: () {
-                              cubit.getCompleteTasksFromDB();
-                            },
-                          ),
-                          DynamicColorsButton(
-                            text: locale.active,
-                            isPressed: cubit.activeButton == 2 ? true : false,
-                            onTap: () {
-                              cubit.getUnCompleteTasksFromDB();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ), // filter of tasks buttons
-                  BlocBuilder<TasksCubit, TasksStates>(
-                    builder: (context, state) {
-                      final cubit = TasksCubit.get(context);
-                      List<Map<String, dynamic>> currentTasks = [];
-                      if (state is TasksLoadingState) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: ColorManager.green,
-                          ),
-                        );
-                      }
-                      if (state is TasksLoadedState) {
-                        currentTasks = state.tasks;
-                      } else if (state is DoneTasksLoadedState) {
-                        currentTasks = state.tasks;
-                      } else if (state is UnDoneTasksLoadedState) {
-                        currentTasks = state.tasks;
-                      } else if (state is TasksErrorState) {
-                        return Center(child: Text(state.message));
-                      }
-
-                      if (currentTasks.isNotEmpty) {
-                        return ListView.separated(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (contex, index) => Dismissible(
-                            key: Key(currentTasks[index]["id"].toString()),
-                            confirmDismiss: (direction) async {
-                              if (direction == DismissDirection.endToStart) {
-                                return await showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    backgroundColor: ColorManager.background,
-                                    title: Text(S.of(context).deleteTaskTitle),
-                                    content: Text(
-                                      S.of(context).deleteTaskConfirmation,
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
-                                        child: Text(
-                                          S.of(context).cancel,
-                                          style: const TextStyle(
-                                            color: ColorManager.green,
-                                          ),
-                                        ),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          cubit
-                                              .deleteTaskFromDB(
-                                                currentTasks[index]["id"],
-                                              )
-                                              .then(
-                                                (_) => Navigator.of(
-                                                  context,
-                                                ).pop(true),
-                                              );
-                                        },
-                                        child: Text(
-                                          S.of(context).delete,
-                                          style: const TextStyle(
-                                            color: ColorManager.red,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+            body: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Column(
+                    children: [
+                      CustomAppBar(
+                        text: locale.tasks,
+                        widget: BlocBuilder<TasksCubit, TasksStates>(
+                          builder: (context, state) {
+                            var cubit = TasksCubit.get(context);
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: InformationCard(
+                                    text: cubit.activeTasks.toString(),
+                                    subText: locale.activeTasks,
+                                    cardColor: ColorManager.green50,
+                                    textColor: ColorManager.green,
                                   ),
-                                );
-                              }
-                              return null;
-                            },
-                            direction: DismissDirection.endToStart,
-                            child: TaskInformationCard(
-                              isDone: currentTasks[index]["isDone"] == 1
-                                  ? true
-                                  : false,
-                              colorOfPriority:
-                                  cubit.getPriorityColor(
-                                    currentTasks[index]["priority"],
-                                    currentTasks[index]["isDone"] == 1
-                                        ? false
-                                        : true,
-                                  ) ??
-                                  ColorManager.lightGrey,
-                              title: currentTasks[index]["title"],
-                              subTitle: currentTasks[index]["subTitle"],
-                              textOfPriority: cubit.getPriorityText(
-                                context,
-                                currentTasks[index]["priority"],
+                                ),
+                                Expanded(
+                                  child: InformationCard(
+                                    text: cubit.completedTasks.toString(),
+                                    subText: locale.completedTasks,
+                                    cardColor: Color(0xFFE3F2FD),
+                                    textColor: ColorManager.blue,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ), // colored information cards and back button and title
+                      const SizedBox(height: 20),
+                      BlocBuilder<TasksCubit, TasksStates>(
+                        builder: (context, state) {
+                          var cubit = TasksCubit.get(context);
+                          return Row(
+                            children: [
+                              DynamicColorsButton(
+                                text: locale.allTasks,
+                                isPressed: cubit.activeButton == 0
+                                    ? true
+                                    : false,
+                                onTap: () {
+                                  cubit.getTasksFromDB();
+                                },
                               ),
-                              doneButton: () {
-                                cubit.changeStateOfTask(
-                                  currentTasks[index]["id"],
-                                  currentTasks[index]["isDone"] == 1 ? 0 : 1,
-                                );
-                              },
-                              date: currentTasks[index]["date"],
-                              hour: currentTasks[index]["hour"].toString(),
-                              minutes: currentTasks[index]["minutes"]
-                                  .toString(),
-                              period: currentTasks[index]["period"],
-                            ),
-                          ),
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 10),
-                          itemCount: currentTasks.length,
-                        );
-                      } else {
-                        return Center(
-                          child: Text(
-                            S.of(context).emptyTasks,
-                            style: TextStyle(
-                              fontSize: FontSize.s20,
-                              color: ColorManager.textLightGrey,
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ), //list of tasks
-                ],
+                              DynamicColorsButton(
+                                text: locale.completed,
+                                isPressed: cubit.activeButton == 1
+                                    ? true
+                                    : false,
+                                onTap: () {
+                                  cubit.getCompleteTasksFromDB();
+                                },
+                              ),
+                              DynamicColorsButton(
+                                text: locale.active,
+                                isPressed: cubit.activeButton == 2
+                                    ? true
+                                    : false,
+                                onTap: () {
+                                  cubit.getUnCompleteTasksFromDB();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ), // filter of tasks buttons
+                      BlocBuilder<TasksCubit, TasksStates>(
+                        builder: (context, state) {
+                          final cubit = TasksCubit.get(context);
+                          List<Map<String, dynamic>> currentTasks = [];
+                          if (state is TasksLoadingState) {
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                  color: ColorManager.green,
+                                ),
+                              ),
+                            );
+                          }
+                          if (state is TasksLoadedState) {
+                            currentTasks = state.tasks;
+                          } else if (state is DoneTasksLoadedState) {
+                            currentTasks = state.tasks;
+                          } else if (state is UnDoneTasksLoadedState) {
+                            currentTasks = state.tasks;
+                          } else if (state is TasksErrorState) {
+                            return Center(child: Text(state.message));
+                          }
+
+                          if (currentTasks.isNotEmpty) {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (contex, index) => Dismissible(
+                                key: Key(currentTasks[index]["id"].toString()),
+                                confirmDismiss: (direction) async {
+                                  if (direction ==
+                                      DismissDirection.endToStart) {
+                                    return await showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        backgroundColor:
+                                            ColorManager.background,
+                                        title: Text(
+                                          S.of(context).deleteTaskTitle,
+                                        ),
+                                        content: Text(
+                                          S.of(context).deleteTaskConfirmation,
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () => Navigator.of(
+                                              context,
+                                            ).pop(false),
+                                            child: Text(
+                                              S.of(context).cancel,
+                                              style: const TextStyle(
+                                                color: ColorManager.green,
+                                              ),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              cubit
+                                                  .deleteTaskFromDB(
+                                                    currentTasks[index]["id"],
+                                                  )
+                                                  .then(
+                                                    (_) => Navigator.of(
+                                                      context,
+                                                    ).pop(true),
+                                                  );
+                                            },
+                                            child: Text(
+                                              S.of(context).delete,
+                                              style: const TextStyle(
+                                                color: ColorManager.red,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  return null;
+                                },
+                                direction: DismissDirection.endToStart,
+                                child: TaskInformationCard(
+                                  isDone: currentTasks[index]["isDone"] == 1
+                                      ? true
+                                      : false,
+                                  colorOfPriority:
+                                      cubit.getPriorityColor(
+                                        currentTasks[index]["priority"],
+                                        currentTasks[index]["isDone"] == 1
+                                            ? false
+                                            : true,
+                                      ) ??
+                                      ColorManager.lightGrey,
+                                  title: currentTasks[index]["title"],
+                                  subTitle: currentTasks[index]["subTitle"],
+                                  textOfPriority: cubit.getPriorityText(
+                                    context,
+                                    currentTasks[index]["priority"],
+                                  ),
+                                  doneButton: () {
+                                    cubit.changeStateOfTask(
+                                      currentTasks[index]["id"],
+                                      currentTasks[index]["isDone"] == 1
+                                          ? 0
+                                          : 1,
+                                    );
+                                  },
+                                  date: currentTasks[index]["date"],
+                                  hour: currentTasks[index]["hour"].toString(),
+                                  minutes: currentTasks[index]["minutes"]
+                                      .toString(),
+                                  period: currentTasks[index]["period"],
+                                ),
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(height: 10),
+                              itemCount: currentTasks.length,
+                            );
+                          } else {
+                            return SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              child: Center(
+                                child: Text(
+                                  S.of(context).emptyTasks,
+                                  style: TextStyle(
+                                    fontSize: FontSize.s20,
+                                    color: ColorManager.textLightGrey,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                      ), //list of tasks
+                    ],
+                  ),
+                ),
               ),
             ),
           );

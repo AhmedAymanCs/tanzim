@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 
@@ -28,7 +29,7 @@ class CustomAppBar extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h),
           Row(
             children: [
               IconButton(
@@ -37,7 +38,7 @@ class CustomAppBar extends StatelessWidget {
                 },
                 icon: Icon(Icons.arrow_back, size: 30),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10.w),
               Text(
                 text,
                 style: TextStyle(
@@ -47,7 +48,7 @@ class CustomAppBar extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 30),
+          SizedBox(height: 30.h),
           widget ?? SizedBox(),
         ],
       ),

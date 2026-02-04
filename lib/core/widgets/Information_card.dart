@@ -7,14 +7,12 @@ class InformationCard extends StatelessWidget {
   final String subText;
   final Color textColor;
   final Color cardColor;
-  final bool crossAxisStart;
   const InformationCard({
     super.key,
     required this.text,
     required this.subText,
     required this.textColor,
     required this.cardColor,
-    required this.crossAxisStart,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,9 +25,7 @@ class InformationCard extends StatelessWidget {
         color: cardColor,
       ),
       child: Column(
-        crossAxisAlignment: crossAxisStart
-            ? CrossAxisAlignment.start
-            : CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             text,
@@ -39,13 +35,18 @@ class InformationCard extends StatelessWidget {
               color: textColor,
             ),
           ),
-          Text(
-            subText,
-            style: TextStyle(
-              fontWeight: FontWeightManager.regular,
-              fontSize: FontSize.s18,
-              color: ColorManager.textLightGrey,
-            ),
+          Row(
+            children: [
+              Text(
+                subText,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  fontWeight: FontWeightManager.regular,
+                  fontSize: FontSize.s18,
+                  color: ColorManager.textLightGrey,
+                ),
+              ),
+            ],
           ),
         ],
       ),

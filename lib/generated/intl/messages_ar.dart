@@ -23,12 +23,12 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "active": MessageLookupByLibrary.simpleMessage("نشطة"),
-    "activeTasks": MessageLookupByLibrary.simpleMessage("مهام النشطة"),
+    "activeTasks": MessageLookupByLibrary.simpleMessage("المهام النشطة"),
     "addTask": MessageLookupByLibrary.simpleMessage("اضافة مهمة"),
     "allTasks": MessageLookupByLibrary.simpleMessage("كل المهام"),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "completed": MessageLookupByLibrary.simpleMessage("مكتملة"),
-    "completedTasks": MessageLookupByLibrary.simpleMessage("مهام مكتمله"),
+    "completedTasks": MessageLookupByLibrary.simpleMessage("المهام المكتملة"),
     "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
     "delete": MessageLookupByLibrary.simpleMessage("حذف"),
     "deleteTaskConfirmation": MessageLookupByLibrary.simpleMessage(
