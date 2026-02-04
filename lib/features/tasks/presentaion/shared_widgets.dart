@@ -289,272 +289,278 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Text(
-                  S.of(context).addTask,
-                  style: TextStyle(
-                    fontSize: FontSize.s18,
-                    fontWeight: FontWeightManager.bold,
-                  ),
-                ),
-                const Spacer(),
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-            // title form
-            TaskTextField(
-              controller: widget.titlecontroller,
-              label: S.of(context).taskTitle,
-              color: ColorManager.blue,
-              focusColor: ColorManager.green,
-              validator: (value) {
-                if (value!.trim().isEmpty) {
-                  return S.of(context).validate;
-                }
-                return null;
-              },
-            ),
-
-            const SizedBox(height: 30),
-            // decription form
-            TaskTextField(
-              controller: widget.descriptioncontroller,
-              label: S.of(context).taskDescription,
-              color: ColorManager.blue,
-              focusColor: ColorManager.green,
-              maxLine: 2,
-            ),
-
-            const SizedBox(height: 30),
-
-            //pick date form
-            TaskTextField(
-              controller: widget.datecontroller,
-              label: S.of(context).date,
-              color: ColorManager.blue,
-              focusColor: ColorManager.green,
-              onTap: () {
-                showDatePicker(
-                  context: context,
-                  firstDate: DateTime.now(),
-                  initialDate: DateTime.now(),
-                  lastDate: DateTime(2100),
-                  builder: (context, child) => Theme(
-                    data: Theme.of(context).copyWith(
-                      colorScheme: ColorScheme.light(
-                        surface: ColorManager.background,
-                        primary: ColorManager.green,
-                      ),
-                    ),
-                    child: child!,
-                  ),
-                ).then((date) {
-                  widget.onDateModelChanged(
-                    DateModel(
-                      day: date!.day,
-                      month: date.month,
-                      year: date.year,
-                    ),
-                  );
-                  widget.datecontroller.text =
-                      '${date.day} - ${date.month} - ${date.year}';
-                });
-              },
-              validator: (value) {
-                if (value!.trim().isEmpty) {
-                  return S.of(context).validate;
-                }
-                return null;
-              },
-              readOnly: true,
-              showCursor: false,
-            ),
-
-            const SizedBox(height: 30),
-            //pick time form
-            TaskTextField(
-              controller: widget.timecontroller,
-              label: S.of(context).time,
-              color: ColorManager.blue,
-              focusColor: ColorManager.green,
-              onTap: () {
-                showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.now(),
-                  builder: (context, child) => Theme(
-                    data: Theme.of(context).copyWith(
-                      colorScheme: ColorScheme.light(
-                        primary: ColorManager.green,
-                        onSurface: ColorManager.darkGrey,
-                      ),
-                      timePickerTheme: TimePickerThemeData(
-                        dayPeriodColor: ColorManager.green,
-                      ),
-                    ),
-                    child: child!,
-                  ),
-                ).then((pickedTime) {
-                  int hour = pickedTime!.hour;
-                  final minute = pickedTime.minute.toString().padLeft(2, '0');
-                  final period = hour >= 12 ? 'PM' : 'AM';
-                  if (hour > 12) hour -= 12;
-                  if (hour == 0) hour = 12;
-                  widget.timecontroller.text = '$hour:$minute $period';
-                  widget.onTimeModelChanged(
-                    TimeModel(
-                      hour: hour,
-                      minute: int.parse(minute),
-                      period: period,
-                    ),
-                  );
-                });
-              },
-              readOnly: true,
-              showCursor: false,
-              validator: (value) {
-                if (value!.trim().isEmpty) {
-                  return S.of(context).validate;
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 20),
-            Text(
-              S.of(context).priority,
-              style: TextStyle(
-                color: ColorManager.darkGrey,
-                fontSize: FontSize.s28,
-                fontWeight: FontWeightManager.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          widget.priority = 1;
-                        });
-                        widget.onPriorityChanged(1);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 60,
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: widget.priority == 1
-                              ? ColorManager.red
-                              : ColorManager.lightGrey.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          S.of(context).high,
-                          style: TextStyle(
-                            color: ColorManager.background,
-                            fontSize: FontSize.s16,
-                            fontWeight: FontWeightManager.bold,
-                          ),
-                        ),
-                      ),
+                  Text(
+                    S.of(context).addTask,
+                    style: TextStyle(
+                      fontSize: FontSize.s18,
+                      fontWeight: FontWeightManager.bold,
                     ),
                   ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          widget.priority = 2;
-                        });
-                        widget.onPriorityChanged(2);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 60,
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: widget.priority == 2
-                              ? ColorManager.orange
-                              : ColorManager.lightGrey.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          S.of(context).medium,
-                          style: TextStyle(
-                            color: ColorManager.background,
-                            fontSize: FontSize.s16,
-                            fontWeight: FontWeightManager.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          widget.priority = 3;
-                        });
-                        widget.onPriorityChanged(3);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: 60,
-                        margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: widget.priority == 3
-                              ? ColorManager.green
-                              : ColorManager.lightGrey.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          S.of(context).low,
-                          style: TextStyle(
-                            color: ColorManager.background,
-                            fontSize: FontSize.s16,
-                            fontWeight: FontWeightManager.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(height: 20),
 
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: widget.onTap,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ColorManager.green,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              const SizedBox(height: 20),
+              // title form
+              TaskTextField(
+                controller: widget.titlecontroller,
+                label: S.of(context).taskTitle,
+                color: ColorManager.blue,
+                focusColor: ColorManager.green,
+                validator: (value) {
+                  if (value!.trim().isEmpty) {
+                    return S.of(context).validate;
+                  }
+                  return null;
+                },
+              ),
+
+              const SizedBox(height: 30),
+              // decription form
+              TaskTextField(
+                controller: widget.descriptioncontroller,
+                label: S.of(context).taskDescription,
+                color: ColorManager.blue,
+                focusColor: ColorManager.green,
+                maxLine: 2,
+              ),
+
+              const SizedBox(height: 30),
+
+              //pick date form
+              TaskTextField(
+                controller: widget.datecontroller,
+                label: S.of(context).date,
+                color: ColorManager.blue,
+                focusColor: ColorManager.green,
+                onTap: () {
+                  showDatePicker(
+                    context: context,
+                    firstDate: DateTime.now(),
+                    initialDate: DateTime.now(),
+                    lastDate: DateTime(2100),
+                    builder: (context, child) => Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: ColorScheme.light(
+                          surface: ColorManager.background,
+                          primary: ColorManager.green,
+                        ),
+                      ),
+                      child: child!,
+                    ),
+                  ).then((date) {
+                    widget.onDateModelChanged(
+                      DateModel(
+                        day: date!.day,
+                        month: date.month,
+                        year: date.year,
+                      ),
+                    );
+                    widget.datecontroller.text =
+                        '${date.day} - ${date.month} - ${date.year}';
+                  });
+                },
+                validator: (value) {
+                  if (value!.trim().isEmpty) {
+                    return S.of(context).validate;
+                  }
+                  return null;
+                },
+                readOnly: true,
+                showCursor: false,
+              ),
+
+              const SizedBox(height: 30),
+              //pick time form
+              TaskTextField(
+                controller: widget.timecontroller,
+                label: S.of(context).time,
+                color: ColorManager.blue,
+                focusColor: ColorManager.green,
+                onTap: () {
+                  showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay.now(),
+                    builder: (context, child) => Theme(
+                      data: Theme.of(context).copyWith(
+                        colorScheme: ColorScheme.light(
+                          primary: ColorManager.green,
+                          onSurface: ColorManager.darkGrey,
+                        ),
+                        timePickerTheme: TimePickerThemeData(
+                          dayPeriodColor: ColorManager.green,
+                        ),
+                      ),
+                      child: child!,
+                    ),
+                  ).then((pickedTime) {
+                    int hour = pickedTime!.hour;
+                    final minute = pickedTime.minute.toString().padLeft(2, '0');
+                    final period = hour >= 12 ? 'PM' : 'AM';
+                    if (hour > 12) hour -= 12;
+                    if (hour == 0) hour = 12;
+                    widget.timecontroller.text = '$hour:$minute $period';
+                    widget.onTimeModelChanged(
+                      TimeModel(
+                        hour: hour,
+                        minute: int.parse(minute),
+                        period: period,
+                      ),
+                    );
+                  });
+                },
+                readOnly: true,
+                showCursor: false,
+                validator: (value) {
+                  if (value!.trim().isEmpty) {
+                    return S.of(context).validate;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 20),
+              Text(
+                S.of(context).priority,
+                style: TextStyle(
+                  color: ColorManager.darkGrey,
+                  fontSize: FontSize.s28,
+                  fontWeight: FontWeightManager.bold,
                 ),
-                child: Text(
-                  S.of(context).save,
-                  style: TextStyle(
-                    color: ColorManager.background,
-                    fontWeight: FontWeightManager.bold,
-                    fontSize: FontSize.s20,
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            widget.priority = 1;
+                          });
+                          widget.onPriorityChanged(1);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: widget.priority == 1
+                                ? ColorManager.red
+                                : ColorManager.lightGrey.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            S.of(context).high,
+                            style: TextStyle(
+                              color: ColorManager.background,
+                              fontSize: FontSize.s16,
+                              fontWeight: FontWeightManager.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            widget.priority = 2;
+                          });
+                          widget.onPriorityChanged(2);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: widget.priority == 2
+                                ? ColorManager.orange
+                                : ColorManager.lightGrey.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            S.of(context).medium,
+                            style: TextStyle(
+                              color: ColorManager.background,
+                              fontSize: FontSize.s16,
+                              fontWeight: FontWeightManager.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            widget.priority = 3;
+                          });
+                          widget.onPriorityChanged(3);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: widget.priority == 3
+                                ? ColorManager.green
+                                : ColorManager.lightGrey.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Text(
+                            S.of(context).low,
+                            style: TextStyle(
+                              color: ColorManager.background,
+                              fontSize: FontSize.s16,
+                              fontWeight: FontWeightManager.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: widget.onTap,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorManager.green,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    S.of(context).save,
+                    style: TextStyle(
+                      color: ColorManager.background,
+                      fontWeight: FontWeightManager.bold,
+                      fontSize: FontSize.s20,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

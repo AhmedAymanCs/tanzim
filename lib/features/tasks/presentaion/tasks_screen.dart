@@ -62,71 +62,71 @@ class TasksScreen extends StatelessWidget {
               backgroundColor: ColorManager.green,
               child: Icon(Icons.add, color: ColorManager.background),
             ),
-            body: Column(
-              children: [
-                CustomAppBar(
-                  text: locale.tasks,
-                  widget: BlocBuilder<TasksCubit, TasksStates>(
+            body: SingleChildScrollView(
+              child: Column(
+                children: [
+                  CustomAppBar(
+                    text: locale.tasks,
+                    widget: BlocBuilder<TasksCubit, TasksStates>(
+                      builder: (context, state) {
+                        var cubit = TasksCubit.get(context);
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: InformationCard(
+                                crossAxisStart: false,
+                                text: cubit.activeTasks.toString(),
+                                subText: locale.activeTasks,
+                                cardColor: ColorManager.green50,
+                                textColor: ColorManager.green,
+                              ),
+                            ),
+                            Expanded(
+                              child: InformationCard(
+                                crossAxisStart: false,
+                                text: cubit.completedTasks.toString(),
+                                subText: locale.completedTasks,
+                                cardColor: Color(0xFFE3F2FD),
+                                textColor: ColorManager.blue,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  ), // colored information cards and back button and title
+                  const SizedBox(height: 20),
+                  BlocBuilder<TasksCubit, TasksStates>(
                     builder: (context, state) {
                       var cubit = TasksCubit.get(context);
                       return Row(
                         children: [
-                          Expanded(
-                            child: InformationCard(
-                              crossAxisStart: false,
-                              text: cubit.activeTasks.toString(),
-                              subText: locale.activeTasks,
-                              cardColor: ColorManager.green50,
-                              textColor: ColorManager.green,
-                            ),
+                          DynamicColorsButton(
+                            text: locale.allTasks,
+                            isPressed: cubit.activeButton == 0 ? true : false,
+                            onTap: () {
+                              cubit.getTasksFromDB();
+                            },
                           ),
-                          Expanded(
-                            child: InformationCard(
-                              crossAxisStart: false,
-                              text: cubit.completedTasks.toString(),
-                              subText: locale.completedTasks,
-                              cardColor: Color(0xFFE3F2FD),
-                              textColor: ColorManager.blue,
-                            ),
+                          DynamicColorsButton(
+                            text: locale.completed,
+                            isPressed: cubit.activeButton == 1 ? true : false,
+                            onTap: () {
+                              cubit.getCompleteTasksFromDB();
+                            },
+                          ),
+                          DynamicColorsButton(
+                            text: locale.active,
+                            isPressed: cubit.activeButton == 2 ? true : false,
+                            onTap: () {
+                              cubit.getUnCompleteTasksFromDB();
+                            },
                           ),
                         ],
                       );
                     },
-                  ),
-                ), // colored information cards and back button and title
-                const SizedBox(height: 20),
-                BlocBuilder<TasksCubit, TasksStates>(
-                  builder: (context, state) {
-                    var cubit = TasksCubit.get(context);
-                    return Row(
-                      children: [
-                        DynamicColorsButton(
-                          text: locale.allTasks,
-                          isPressed: cubit.activeButton == 0 ? true : false,
-                          onTap: () {
-                            cubit.getTasksFromDB();
-                          },
-                        ),
-                        DynamicColorsButton(
-                          text: locale.completed,
-                          isPressed: cubit.activeButton == 1 ? true : false,
-                          onTap: () {
-                            cubit.getCompleteTasksFromDB();
-                          },
-                        ),
-                        DynamicColorsButton(
-                          text: locale.active,
-                          isPressed: cubit.activeButton == 2 ? true : false,
-                          onTap: () {
-                            cubit.getUnCompleteTasksFromDB();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                ), // filter of tasks buttons
-                Expanded(
-                  child: BlocBuilder<TasksCubit, TasksStates>(
+                  ), // filter of tasks buttons
+                  BlocBuilder<TasksCubit, TasksStates>(
                     builder: (context, state) {
                       final cubit = TasksCubit.get(context);
                       List<Map<String, dynamic>> currentTasks = [];
@@ -149,6 +149,8 @@ class TasksScreen extends StatelessWidget {
 
                       if (currentTasks.isNotEmpty) {
                         return ListView.separated(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (contex, index) => Dismissible(
                             key: Key(currentTasks[index]["id"].toString()),
                             confirmDismiss: (direction) async {
@@ -245,9 +247,9 @@ class TasksScreen extends StatelessWidget {
                         );
                       }
                     },
-                  ),
-                ), //list of tasks
-              ],
+                  ), //list of tasks
+                ],
+              ),
             ),
           );
         },
