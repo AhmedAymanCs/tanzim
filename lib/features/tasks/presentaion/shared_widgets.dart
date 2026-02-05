@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/features/tasks/data/model/date_model.dart';
@@ -23,8 +24,8 @@ class DynamicColorsButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(horizontal: 5),
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 5.h),
+        padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 10.w),
         decoration: BoxDecoration(
           color: isPressed ? ColorManager.green : ColorManager.appBarColor,
           borderRadius: BorderRadius.circular(10),
@@ -56,6 +57,7 @@ class TaskInformationCard extends StatelessWidget {
   final String title;
   final String subTitle;
   final void Function()? doneButton;
+  final void Function()? longPress;
   const TaskInformationCard({
     super.key,
     required this.isDone,
@@ -68,13 +70,13 @@ class TaskInformationCard extends StatelessWidget {
     required this.hour,
     required this.minutes,
     required this.period,
+    this.longPress,
   });
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      margin: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
       decoration: BoxDecoration(
         color: ColorManager.appBarColor,
         borderRadius: BorderRadius.circular(10),
@@ -87,167 +89,182 @@ class TaskInformationCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: doneButton,
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: isDone
-                      ? ColorManager.green
-                      : ColorManager.lightGrey.withOpacity(0.5),
-                  width: 3,
-                ),
-              ),
-              child: Icon(
-                Icons.check,
-                color: isDone
-                    ? ColorManager.green
-                    : ColorManager.lightGrey.withOpacity(0.5),
-                size: 25,
-              ),
-            ),
-          ),
-          const SizedBox(width: 10),
-
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Material(
+        color: ColorManager.appBarColor, // to match the container color
+        borderRadius: BorderRadius.circular(10),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          splashColor: ColorManager.green400.withOpacity(0.2),
+          onLongPress: longPress,
+          onTap: () {},
+          child: Padding(
+            padding: EdgeInsets.all(10.h),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: isDone
-                        ? ColorManager.textLightGrey.withOpacity(0.7)
-                        : ColorManager.darkGrey,
-                    decoration: isDone ? TextDecoration.lineThrough : null,
-                    fontWeight: FontWeightManager.bold,
-                    fontSize: FontSize.s18,
-                  ),
-                ),
-                Text(
-                  subTitle,
-                  style: TextStyle(
-                    color: ColorManager.textLightGrey,
-                    fontWeight: FontWeightManager.regular,
-                    fontSize: FontSize.s14,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    PriorityCard(
-                      text: textOfPriority,
-                      colorOfPriority: colorOfPriority,
-                    ),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: ColorManager.lightGrey.withOpacity(0.1),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.calendar_month_outlined,
-                              size: 15,
-                              color: ColorManager.lightGrey,
-                            ),
-                            const SizedBox(width: 4),
-                            Flexible(
-                              child: Text(
-                                date,
-                                style: TextStyle(
-                                  fontSize: FontSize.s12,
-                                  color: ColorManager.lightGrey,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
+                GestureDetector(
+                  onTap: doneButton,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: isDone
+                            ? ColorManager.green
+                            : ColorManager.lightGrey.withOpacity(0.5),
+                        width: 3,
                       ),
                     ),
-                  ],
+                    child: Icon(
+                      Icons.check,
+                      color: isDone
+                          ? ColorManager.green
+                          : ColorManager.lightGrey.withOpacity(0.5),
+                      size: 25,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10.w),
+
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          color: isDone
+                              ? ColorManager.textLightGrey.withOpacity(0.7)
+                              : ColorManager.darkGrey,
+                          decoration: isDone
+                              ? TextDecoration.lineThrough
+                              : null,
+                          fontWeight: FontWeightManager.bold,
+                          fontSize: FontSize.s18,
+                        ),
+                      ),
+                      Text(
+                        subTitle,
+                        style: TextStyle(
+                          color: ColorManager.textLightGrey,
+                          fontWeight: FontWeightManager.regular,
+                          fontSize: FontSize.s14,
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        children: [
+                          PriorityCard(
+                            text: textOfPriority,
+                            colorOfPriority: colorOfPriority,
+                          ),
+                          SizedBox(width: 8.w),
+                          Flexible(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 5.w,
+                                vertical: 2.h,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: ColorManager.lightGrey.withOpacity(0.1),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_outlined,
+                                    size: 15.h,
+                                    color: ColorManager.lightGrey,
+                                  ),
+                                  SizedBox(width: 4.w),
+                                  Flexible(
+                                    child: Text(
+                                      date,
+                                      style: TextStyle(
+                                        fontSize: FontSize.s12,
+                                        color: ColorManager.lightGrey,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                SizedBox(width: 5.w),
+
+                Text(
+                  period,
+                  style: TextStyle(
+                    fontSize: FontSize.s18,
+                    fontWeight: FontWeightManager.bold,
+                    color: isDone
+                        ? ColorManager.darkGrey.withOpacity(0.4)
+                        : (period == "PM"
+                              ? ColorManager.lightGrey.withOpacity(0.4)
+                              : ColorManager.blue.withOpacity(0.4)),
+                    fontFamily: 'Digital',
+                  ),
+                ),
+
+                SizedBox(width: 8.w),
+
+                Container(
+                  padding: EdgeInsets.all(15.h),
+                  alignment: Alignment.topCenter,
+                  decoration: BoxDecoration(
+                    color: ColorManager.appBarColor,
+                    shape: BoxShape.circle,
+                    border: BoxBorder.all(color: colorOfPriority, width: 0.5.h),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorOfPriority.withOpacity(0.2),
+                        offset: const Offset(0, 4),
+                        blurRadius: 8,
+                      ),
+                    ],
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          hour.padLeft(2, '0'),
+                          style: TextStyle(
+                            height: 1,
+                            fontSize: FontSize.s16,
+                            fontWeight: FontWeightManager.bold,
+                            color: colorOfPriority.withOpacity(0.7),
+                            fontFamily: 'Digital',
+                          ),
+                        ),
+                        Text(
+                          minutes.padLeft(2, '0'),
+                          style: TextStyle(
+                            height: 1,
+                            fontSize: FontSize.s16,
+                            fontWeight: FontWeightManager.bold,
+                            fontFamily: 'Digital',
+                            color: colorOfPriority.withOpacity(0.7),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-
-          const SizedBox(width: 5),
-
-          Text(
-            period,
-            style: TextStyle(
-              fontSize: FontSize.s18,
-              fontWeight: FontWeightManager.bold,
-              color: isDone
-                  ? ColorManager.darkGrey.withOpacity(0.4)
-                  : (period == "PM"
-                        ? ColorManager.lightGrey.withOpacity(0.4)
-                        : ColorManager.blue.withOpacity(0.4)),
-              fontFamily: 'Digital',
-            ),
-          ),
-
-          const SizedBox(width: 8),
-
-          Container(
-            padding: const EdgeInsets.all(15),
-            alignment: Alignment.topCenter,
-            decoration: BoxDecoration(
-              color: ColorManager.appBarColor,
-              shape: BoxShape.circle,
-              border: BoxBorder.all(color: colorOfPriority, width: 0.5),
-              boxShadow: [
-                BoxShadow(
-                  color: colorOfPriority.withOpacity(0.2),
-                  offset: const Offset(0, 4),
-                  blurRadius: 8,
-                ),
-              ],
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    hour.padLeft(2, '0'),
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeightManager.bold,
-                      color: colorOfPriority.withOpacity(0.7),
-                      fontFamily: 'Digital',
-                    ),
-                  ),
-                  Text(
-                    minutes.padLeft(2, '0'),
-                    style: TextStyle(
-                      height: 1,
-                      fontSize: FontSize.s16,
-                      fontWeight: FontWeightManager.bold,
-                      fontFamily: 'Digital',
-                      color: colorOfPriority.withOpacity(0.7),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -314,7 +331,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               // title form
               TaskTextField(
                 controller: widget.titlecontroller,
@@ -329,7 +346,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 },
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
               // decription form
               TaskTextField(
                 controller: widget.descriptioncontroller,
@@ -339,7 +356,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 maxLine: 2,
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
 
               //pick date form
               TaskTextField(
@@ -384,7 +401,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                 showCursor: false,
               ),
 
-              const SizedBox(height: 30),
+              SizedBox(height: 30.h),
               //pick time form
               TaskTextField(
                 controller: widget.timecontroller,
@@ -432,7 +449,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   return null;
                 },
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
               Text(
                 S.of(context).priority,
                 style: TextStyle(
@@ -441,7 +458,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   fontWeight: FontWeightManager.bold,
                 ),
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: 10.h),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Row(
@@ -536,7 +553,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               SizedBox(
                 width: double.infinity,
@@ -544,7 +561,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   onPressed: widget.onTap,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ColorManager.green,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

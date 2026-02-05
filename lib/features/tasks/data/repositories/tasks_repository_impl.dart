@@ -30,7 +30,11 @@ class TasksRepository {
     await local.deleteTask(id);
   }
 
-  Future<int> updateTasks(int id, int value) async {
-    return await local.updateTask(id, value);
+  Future<int> changeTaskStateTask(int id, int value) async {
+    return await local.changeTaskStateTask(id, value);
+  }
+
+  Future<int> updateTask(int id, Map<String, dynamic> values) async {
+    return await local.updateTask(id, values);
   }
 }

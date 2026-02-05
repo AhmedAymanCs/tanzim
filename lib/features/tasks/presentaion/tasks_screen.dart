@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
 import 'package:tanzim/core/widgets/Information_card.dart';
@@ -96,7 +97,7 @@ class TasksScreen extends StatelessWidget {
                           },
                         ),
                       ), // colored information cards and back button and title
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       BlocBuilder<TasksCubit, TasksStates>(
                         builder: (context, state) {
                           var cubit = TasksCubit.get(context);
@@ -216,6 +217,63 @@ class TasksScreen extends StatelessWidget {
                                 },
                                 direction: DismissDirection.endToStart,
                                 child: TaskInformationCard(
+                                  longPress: () {
+                                    int priority =
+                                        currentTasks[index]['priority'];
+                                    cubit.fillTaskFormFields(
+                                      currentTasks[index],
+                                    );
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return SingleChildScrollView(
+                                          child: Form(
+                                            key: formKey,
+                                            child: AddTaskDialog(
+                                              onTimeModelChanged:
+                                                  cubit.fillTimeModel,
+                                              onDateModelChanged:
+                                                  cubit.fillDateModel,
+                                              titlecontroller: cubit.titleController
+                                                ..text =
+                                                    currentTasks[index]['title'],
+                                              descriptioncontroller:
+                                                  cubit.descriptionController
+                                                    ..text =
+                                                        currentTasks[index]['subTitle'],
+                                              datecontroller: cubit.dateController
+                                                ..text =
+                                                    currentTasks[index]['date'],
+                                              timecontroller: cubit.timeController
+                                                ..text =
+                                                    '${currentTasks[index]['hour'].toString().padLeft(2, '0')}:${currentTasks[index]['minutes'].toString().padLeft(2, '0')} ${currentTasks[index]['period']}',
+                                              onTap: () {
+                                                cubit
+                                                    .submitUpdateTask(
+                                                      id: currentTasks[index]["id"],
+                                                      timeErrorMsg:
+                                                          locale.notAllowedTime,
+                                                      priorityErrorMsg: locale
+                                                          .priorityValidate,
+                                                      priority: priority,
+                                                      formKey: formKey,
+                                                    )
+                                                    .then((sucsses) {
+                                                      if (sucsses)
+                                                        Navigator.of(
+                                                          context,
+                                                        ).pop();
+                                                    });
+                                              },
+                                              onPriorityChanged: (int p1) {
+                                                priority = p1;
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
                                   isDone: currentTasks[index]["isDone"] == 1
                                       ? true
                                       : false,

@@ -25,6 +25,11 @@ class TasksLocalDatabaseSource {
     return db.insert('Tasks', value);
   }
 
+  Future<int> updateTask(int id, Map<String, dynamic> values) async {
+    final db = await LocalAppDB.database;
+    return db.update('Tasks', values, where: 'id = ?', whereArgs: [id]);
+  }
+
   //delete tasks
   Future<void> deleteTask(int id) async {
     final db = await LocalAppDB.database;
@@ -32,7 +37,7 @@ class TasksLocalDatabaseSource {
   }
 
   //update tasks
-  Future<int> updateTask(int id, int value) async {
+  Future<int> changeTaskStateTask(int id, int value) async {
     final db = await LocalAppDB.database;
     return await db.update(
       "Tasks",

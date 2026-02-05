@@ -69,6 +69,69 @@ class TasksCubit extends Cubit<TasksStates> {
     return true;
   }
 
+  Future<bool> submitUpdateTask({
+    required int id,
+    required String timeErrorMsg,
+    required String priorityErrorMsg,
+    required int priority,
+    required GlobalKey<FormState> formKey,
+  }) async {
+    if (formKey.currentState!.validate() && isSuitableTime()) {
+      await updataTask(
+        timeErrorMsg: timeErrorMsg,
+        priorityErrorMsg: priorityErrorMsg,
+        priority: priority,
+        id: id,
+        formKey: formKey,
+      );
+    } else if (!isSuitableTime()) {
+      Fluttertoast.showToast(
+        msg: timeErrorMsg,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: ColorManager.red,
+      );
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> updataTask({
+    required String timeErrorMsg,
+    required String priorityErrorMsg,
+    required int priority,
+    required int id,
+    required GlobalKey<FormState> formKey,
+  }) async {
+    if (formKey.currentState!.validate() && priority != 0 && isSuitableTime()) {
+      updateTaskIntoDB(id, {
+        "title": titleController.text,
+        "subTitle": descriptionController.text,
+        "hour": currentTimeModel.hour,
+        "minutes": currentTimeModel.minute,
+        "period": currentTimeModel.period,
+        "date": dateController.text,
+        "priority": priority,
+      }).then((value) {
+        //clearTaskFormField();
+      });
+    } else if (priority == 0) {
+      Fluttertoast.showToast(
+        msg: priorityErrorMsg,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: ColorManager.orange,
+      );
+      return false;
+    } else if (!isSuitableTime()) {
+      Fluttertoast.showToast(
+        msg: timeErrorMsg,
+        gravity: ToastGravity.SNACKBAR,
+        backgroundColor: ColorManager.red,
+      );
+      return false;
+    }
+    return true;
+  }
+
   bool isSuitableTime() {
     final DateTime now = DateTime.now();
     final pickedDateTime = DateTime(
@@ -108,7 +171,7 @@ class TasksCubit extends Cubit<TasksStates> {
 
   void changeStateOfTask(int id, int isDone) {
     try {
-      updateTask(id, isDone).then((_) {
+      changeTaskStateTask(id, isDone).then((_) {
         getTasksFromDB();
       });
     } catch (e) {
@@ -210,6 +273,27 @@ class TasksCubit extends Cubit<TasksStates> {
     }
   }
 
+  Future<void> updateTaskIntoDB(int id, Map<String, dynamic> values) async {
+    emit(TasksLoadingState());
+    try {
+      await repository.updateTask(id, values);
+      await getTasksFromDB();
+    } catch (e) {
+      emit(TasksErrorState(e.toString()));
+    }
+  }
+
+  void fillTaskFormFields(Map<String, dynamic> task) {
+    titleController.text = task['title'];
+    descriptionController.text = task['subTitle'];
+    dateController.text = task['date'];
+    currentTimeModel = TimeModel(
+      hour: task['hour'],
+      minute: task['minutes'],
+      period: task['period'],
+    );
+  } //fill task form fields for update
+
   //set Notification Service
   Future<void> setNotificationService({
     required int id,
@@ -250,7 +334,7 @@ class TasksCubit extends Cubit<TasksStates> {
   }
 
   //update Task
-  Future<int> updateTask(int id, int value) async {
-    return await repository.updateTasks(id, value);
+  Future<int> changeTaskStateTask(int id, int value) async {
+    return await repository.changeTaskStateTask(id, value);
   }
 }
