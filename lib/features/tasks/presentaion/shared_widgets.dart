@@ -280,6 +280,7 @@ class AddTaskDialog extends StatefulWidget {
   final void Function(int) onPriorityChanged;
   final void Function(TimeModel) onTimeModelChanged;
   final void Function(DateModel) onDateModelChanged;
+  bool isUpdate;
   AddTaskDialog({
     super.key,
     required this.titlecontroller,
@@ -290,6 +291,7 @@ class AddTaskDialog extends StatefulWidget {
     required this.onPriorityChanged,
     required this.onTimeModelChanged,
     required this.onDateModelChanged,
+    this.isUpdate = false,
   });
   int priority = 0;
   @override
@@ -326,7 +328,16 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                   const Spacer(),
                   IconButton(
                     icon: const Icon(Icons.close),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      if (widget.isUpdate) {
+                        widget.titlecontroller.clear();
+                        widget.descriptioncontroller.clear();
+                        widget.datecontroller.clear();
+                        widget.timecontroller.clear();
+                      }
+
+                      Navigator.pop(context);
+                    },
                   ),
                 ],
               ),

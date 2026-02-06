@@ -112,7 +112,7 @@ class TasksCubit extends Cubit<TasksStates> {
         "date": dateController.text,
         "priority": priority,
       }).then((value) {
-        //clearTaskFormField();
+        clearTaskFormField();
       });
     } else if (priority == 0) {
       Fluttertoast.showToast(
