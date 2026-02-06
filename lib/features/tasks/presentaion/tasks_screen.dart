@@ -33,6 +33,7 @@ class TasksScreen extends StatelessWidget {
                       child: Form(
                         key: formKey,
                         child: AddTaskDialog(
+                          priority: priority,
                           onTimeModelChanged: cubit.fillTimeModel,
                           onDateModelChanged: cubit.fillDateModel,
                           titlecontroller: cubit.titleController,
@@ -230,6 +231,7 @@ class TasksScreen extends StatelessWidget {
                                           child: Form(
                                             key: formKey,
                                             child: AddTaskDialog(
+                                              priority: priority,
                                               isUpdate: true,
                                               onTimeModelChanged:
                                                   cubit.fillTimeModel,

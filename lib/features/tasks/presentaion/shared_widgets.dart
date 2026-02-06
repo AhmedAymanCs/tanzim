@@ -291,9 +291,10 @@ class AddTaskDialog extends StatefulWidget {
     required this.onPriorityChanged,
     required this.onTimeModelChanged,
     required this.onDateModelChanged,
+    required this.priority,
     this.isUpdate = false,
   });
-  int priority = 0;
+  int priority;
   @override
   State<AddTaskDialog> createState() => _AddTaskDialogState();
 }
