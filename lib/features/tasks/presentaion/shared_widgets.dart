@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tanzim/core/manager/color_manager.dart';
 import 'package:tanzim/core/manager/font_manager.dart';
+import 'package:tanzim/core/widgets/text_field.dart';
 import 'package:tanzim/features/tasks/data/model/date_model.dart';
 import 'package:tanzim/features/tasks/data/model/time_model.dart';
 import 'package:tanzim/generated/l10n.dart';
@@ -345,7 +346,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
 
               SizedBox(height: 20.h),
               // title form
-              TaskTextField(
+              CustomTextField(
                 controller: widget.titlecontroller,
                 label: S.of(context).taskTitle,
                 color: ColorManager.blue,
@@ -360,7 +361,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
 
               SizedBox(height: 30.h),
               // decription form
-              TaskTextField(
+              CustomTextField(
                 controller: widget.descriptioncontroller,
                 label: S.of(context).taskDescription,
                 color: ColorManager.blue,
@@ -371,7 +372,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               SizedBox(height: 30.h),
 
               //pick date form
-              TaskTextField(
+              CustomTextField(
                 controller: widget.datecontroller,
                 label: S.of(context).date,
                 color: ColorManager.blue,
@@ -415,7 +416,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
 
               SizedBox(height: 30.h),
               //pick time form
-              TaskTextField(
+              CustomTextField(
                 controller: widget.timecontroller,
                 label: S.of(context).time,
                 color: ColorManager.blue,
@@ -590,63 +591,6 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-//custom text field widget
-class TaskTextField extends StatelessWidget {
-  final TextEditingController? controller;
-  final String label;
-  final Color focusColor;
-  final Color color;
-  final int? maxLine;
-  final bool? readOnly;
-  final bool? showCursor;
-  final void Function()? onTap;
-  final String? Function(String?)? validator;
-
-  const TaskTextField({
-    super.key,
-    required this.label,
-    required this.color,
-    required this.focusColor,
-    this.maxLine,
-    this.readOnly,
-    this.onTap,
-    this.showCursor,
-    this.controller,
-    this.validator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      showCursor: showCursor,
-      maxLines: maxLine ?? 1,
-      cursorColor: focusColor,
-      readOnly: readOnly ?? false,
-      onTap: onTap,
-      validator: validator,
-      decoration: InputDecoration(
-        alignLabelWithHint: true,
-        labelText: label,
-        labelStyle: TextStyle(color: ColorManager.darkGrey.withOpacity(0.7)),
-        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: color)),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: focusColor),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: ColorManager.red),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: ColorManager.red),
         ),
       ),
     );
